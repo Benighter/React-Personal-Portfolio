@@ -1,50 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Skills.css';
 
 const Skills = () => {
-  const [activeSkill, setActiveSkill] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const skillsRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const skills = [
-    {
-      name: 'HTML/CSS',
-      percentage: 95,
-      icon: 'fab fa-html5',
-      description: 'Proficient in creating responsive and accessible web pages using modern HTML5 and CSS3 features including Flexbox, Grid, and CSS animations. Experienced with CSS preprocessors like SASS and frameworks like Bootstrap and Tailwind CSS.'
-    },
-    {
-      name: 'JavaScript',
-      percentage: 90,
-      icon: 'fab fa-js',
-      description: 'Strong knowledge of JavaScript ES6+ features, DOM manipulation, asynchronous programming with Promises and async/await. Experienced with modern frameworks and libraries like React, Vue, and jQuery.'
-    },
-    {
-      name: 'React',
-      percentage: 85,
-      icon: 'fab fa-react',
-      description: 'Experienced in building single-page applications with React, using hooks, context API, and Redux for state management. Familiar with React Router for navigation and styled-components for styling.'
-    },
-    {
-      name: 'Node.js',
-      percentage: 80,
-      icon: 'fab fa-node-js',
-      description: 'Skilled in server-side JavaScript using Node.js, creating RESTful APIs with Express, and working with databases like MongoDB and MySQL. Experience with authentication, file uploads, and real-time applications using Socket.io.'
-    },
-    {
-      name: 'Python',
-      percentage: 75,
-      icon: 'fab fa-python',
-      description: 'Proficient in Python for web development, data analysis, and automation. Experience with frameworks like Django and Flask, and libraries like Pandas and NumPy for data processing.'
-    },
-    {
-      name: 'UI/UX Design',
-      percentage: 70,
-      icon: 'fas fa-paint-brush',
-      description: 'Knowledge of user interface and experience design principles, wireframing, prototyping, and creating user-centered designs. Familiar with design tools like Figma and Adobe XD.'
-    }
-  ];
+  // Application & Tool Knowledge
+  const toolKnowledge = useMemo(() => [
+    { name: 'Angular', color: '#DD0031' },
+    { name: 'PostgreSQL', color: '#336791' },
+    { name: 'Spring Boot', color: '#6DB33F' },
+    { name: 'Tailwind CSS', color: '#38B2AC' },
+    { name: 'HTML', color: '#E34F26' },
+    { name: 'Git', color: '#F05032' }
+  ], []);
+
+  // Technical Skills with initial and final assessment values
+  const technicalSkills = useMemo(() => [
+    { name: 'Overall Rating', initial: 1.5, final: 3.8 },
+    { name: 'Angular', initial: 1.2, final: 3.7 },
+    { name: 'HTML & CSS', initial: 1.3, final: 4.5 },
+    { name: 'Java Spring Boot', initial: 1.2, final: 3.6 },
+    { name: 'PostgreSQL', initial: 1.5, final: 4.3 },
+    { name: 'Git', initial: 1.7, final: 3.5 }
+  ], []);
+
+  // Soft Skills
+  const softSkills = useMemo(() => [
+    { name: 'Problem Solving', rating: '4/5' },
+    { name: 'Interpersonal Skills', rating: '3/5' },
+    { name: 'Leadership Skills', rating: '3/5' },
+    { name: 'Team Player Skills', rating: '4/5' },
+    { name: 'Communication', rating: '3/5' }
+  ], []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -57,126 +45,110 @@ const Skills = () => {
       { threshold: 0.1 }
     );
 
-    if (skillsRef.current) {
-      observer.observe(skillsRef.current);
+    const currentRef = skillsRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (skillsRef.current) {
+      if (currentRef) {
         observer.disconnect();
       }
     };
   }, []);
 
-  const openModal = (skill) => {
-    setActiveSkill(skill);
-    setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    document.body.style.overflow = 'auto';
-  };
-
-  // Close modal when clicking outside
-  const handleModalClick = (e) => {
-    if (e.target.classList.contains('skill-modal')) {
-      closeModal();
-    }
-  };
-
-  // Animation for percentage counters
-  const animateValue = (id, start, end, duration) => {
-    if (start === end) return;
-    const range = end - start;
-    let current = start;
-    const increment = end > start ? 1 : -1;
-    const stepTime = Math.abs(Math.floor(duration / range));
-    const element = document.getElementById(id);
-    
-    if (!element) return;
-    
-    const timer = setInterval(() => {
-      current += increment;
-      element.textContent = current + '%';
-      if (current === end) {
-        clearInterval(timer);
-      }
-    }, stepTime);
-  };
-
+  // Animation for bars
   useEffect(() => {
     if (isVisible) {
-      skills.forEach((skill, index) => {
-        setTimeout(() => {
-          animateValue(`skill-percentage-${index}`, 0, skill.percentage, 1000);
-        }, index * 200);
+      const bars = document.querySelectorAll('.skill-progress-bar');
+      bars.forEach((bar) => {
+        bar.style.width = bar.getAttribute('data-width');
       });
     }
-  }, [isVisible, skills]);
+  }, [isVisible]);
 
   return (
     <section id="skills" ref={skillsRef}>
       <div className="skills container">
-        <div className="skills-header">
-          <h1 className="section-title">Sk<span>i</span>lls</h1>
-        </div>
-        <div className="skills-carousel">
-          <div className="carousel-container">
-            {skills.map((skill, index) => (
-              <div 
-                className="skill-item" 
-                key={index} 
-                onClick={() => openModal(skill)}
-              >
-                <div className="skill-info">
-                  <div className="skill-icon">
-                    <i className={skill.icon}></i>
-                  </div>
-                  <h2>{skill.name}</h2>
-                  <div className="skill-percentage" id={`skill-percentage-${index}`}>
-                    {isVisible ? `${skill.percentage}%` : '0%'}
-                  </div>
-                  <div className="skill-bar">
-                    <div 
-                      className="skill-progress" 
-                      style={{ 
-                        width: isVisible ? `${skill.percentage}%` : '0%',
-                        transition: `width 1.5s ease-in-out ${index * 0.2}s`
-                      }}
-                    ></div>
-                  </div>
-                  <button className="read-more-btn">Read More</button>
-                </div>
+        {/* Application & Tool Knowledge */}
+        <div className="tool-knowledge-section">
+          <h1 className="section-title">Application & <span>Tool Knowledge</span></h1>
+          <div className="tool-knowledge-container">
+            {toolKnowledge.map((tool, index) => (
+              <div className="tool-item" key={index} style={{ borderColor: tool.color }}>
+                <span>{tool.name}</span>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Skill Modal */}
-      <div 
-        className={`skill-modal ${isModalOpen ? 'active' : ''}`}
-        onClick={handleModalClick}
-      >
-        <div className="skill-modal-content">
-          <span className="close-modal" onClick={closeModal}>&times;</span>
-          {activeSkill && (
-            <>
-              <h2 id="modal-skill-title">{activeSkill.name}</h2>
-              <div className="modal-skill-percentage">
-                {activeSkill.percentage}%
+        {/* Technical Skills */}
+        <div className="technical-skills-section">
+          <h1 className="section-title">Technical <span>Skills</span></h1>
+          <div className="technical-skills-container">
+            {technicalSkills.map((skill, index) => (
+              <div className="technical-skill-item" key={index}>
+                <div className="skill-name">{skill.name}</div>
+                <div className="skill-bar-container">
+                  <div className="skill-bar-background">
+                    <div 
+                      className="skill-progress-bar initial" 
+                      style={{ width: isVisible ? `${skill.initial * 20}%` : '0%' }}
+                      data-width={`${skill.initial * 20}%`}
+                    ></div>
+                    <div 
+                      className="skill-progress-bar final" 
+                      style={{ width: isVisible ? `${skill.final * 20}%` : '0%' }}
+                      data-width={`${skill.final * 20}%`}
+                    ></div>
+                  </div>
+                </div>
               </div>
-              <div className="modal-skill-bar">
-                <div 
-                  className="modal-skill-progress" 
-                  style={{ width: `${activeSkill.percentage}%` }}
-                ></div>
+            ))}
+            <div className="skill-legend">
+              <div className="legend-item">
+                <div className="legend-color initial"></div>
+                <span>Initial Assessment</span>
               </div>
-              <p id="modal-skill-description">{activeSkill.description}</p>
-            </>
-          )}
+              <div className="legend-item">
+                <div className="legend-color final"></div>
+                <span>Final Assessment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Soft Skills */}
+        <div className="soft-skills-section">
+          <h1 className="section-title">Soft <span>Skills</span></h1>
+          <div className="soft-skills-container">
+            <div className="most-improved">
+              <h3>Most Improved Skill:</h3>
+              <h2>Team Player</h2>
+            </div>
+            {softSkills.map((skill, index) => (
+              <div className="soft-skill-item" key={index}>
+                <div className="skill-rating-circle">
+                  <div className="circle-inner">
+                    <span>{skill.rating}</span>
+                  </div>
+                </div>
+                <h3>{skill.name}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Shaper Review */}
+        <div className="shaper-review-section">
+          <h1 className="section-title">The Shaper <span>Review</span></h1>
+          <div className="review-content">
+            <p>
+              He is a detail-oriented Full Stack developer who consistently
+              delivers high-quality work. His clear communication and
+              adaptability make him a valuable part of any development team.
+            </p>
+          </div>
         </div>
       </div>
     </section>

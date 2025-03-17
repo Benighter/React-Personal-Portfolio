@@ -30,7 +30,7 @@ const About = () => {
             tech landscape. I'm passionate about creating clean, efficient code and delivering high-quality products 
             that exceed client expectations.
           </p>
-          <a href="#" className="cta">Download Resume</a>
+          <a href="/Resume/Bennet_Nkolele_Resume.pdf" className="cta" target="_blank" rel="noopener noreferrer">Download Resume</a>
         </div>
       </div>
     </section>

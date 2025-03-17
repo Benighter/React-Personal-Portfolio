@@ -1,46 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import './Contact.css';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState({
-    submitted: false,
-    success: false,
-    message: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // In a real application, you would send the form data to a server
-    // For this demo, we'll just simulate a successful submission
-    setFormStatus({
-      submitted: true,
-      success: true,
-      message: 'Thank you for your message! I will get back to you soon.'
-    });
-    
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-  };
-
   return (
     <section id="contact">
       <div className="contact container">
@@ -54,7 +17,7 @@ const Contact = () => {
             </div>
             <div className="contact-info">
               <h1>Phone</h1>
-              <h2>+27 81 090 3232 </h2>
+              <h2>+27 81 090 3232</h2>
             </div>
           </div>
           <div className="contact-item">
@@ -76,7 +39,6 @@ const Contact = () => {
             </div>
           </div>
         </div>
-        
       </div>
     </section>
   );
