@@ -116,9 +116,6 @@ const Services = () => {
               <h2>{service.title}</h2>
               <p>{service.description}</p>
               <div className="service-overlay"></div>
-              <div className="service-btn">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </div>
             </div>
           ))}
         </div>

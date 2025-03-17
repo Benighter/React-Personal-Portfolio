@@ -52,6 +52,37 @@
   text-transform: uppercase;
   padding: 20px;
   display: block;
+  position: relative;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+/* Active navigation item styles */
+#header .nav-list ul a.active {
+  color: crimson;
+  font-weight: 700;
+}
+
+#header .nav-list ul a.active::before {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  width: 30%;
+  height: 3px;
+  background-color: crimson;
+  animation: activeNavPulse 1.5s ease-in-out infinite;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+@keyframes activeNavPulse {
+  0% { opacity: 0.5; width: 30%; }
+  50% { opacity: 1; width: 60%; }
+  100% { opacity: 0.5; width: 30%; }
+}
+
+/* Add a subtle glow effect to active items */
+#header .nav-list ul a.active {
+  text-shadow: 0 0 8px rgba(220, 20, 60, 0.5);
 }
 
 #header .nav-list ul a::after {
@@ -182,5 +213,55 @@
   }
   #header .nav-list ul a:after {
     display: none;
+  }
+  
+  /* Desktop active navigation styles */
+  #header .nav-list ul a.active {
+    position: relative;
+  }
+  
+  #header .nav-list ul a.active::before {
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    animation: none;
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+  
+  #header .nav-list ul a.active::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: crimson;
+    display: block !important;
+    transform: none;
+    letter-spacing: normal;
+    font-size: inherit;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+  
+  /* Add hover effect for non-active items */
+  #header .nav-list ul a:not(.active)::before {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: crimson;
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+  
+  #header .nav-list ul a:not(.active):hover::before {
+    width: 80%;
+    left: 10%;
+    opacity: 0.5;
   }
 } 
