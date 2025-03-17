@@ -3,10 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPhone, 
   faEnvelope, 
-  faMapMarkerAlt, 
-  faPaperPlane, 
-  faUser, 
-  faComment 
+  faMapMarkerAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { 
   faGithub, 
@@ -20,33 +17,7 @@ const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
   const contactRef = useRef(null);
   const titleRef = useRef(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -85,17 +56,6 @@ const Contact = () => {
     };
   }, [isVisible]);
 
-  function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    
-    // Parse the hex values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    
-    return `${r}, ${g}, ${b}`;
-  }
-
   const contactItems = [
     {
       icon: faPhone,
@@ -115,13 +75,6 @@ const Contact = () => {
       info: 'Johannesburg, South Africa',
       link: 'https://maps.google.com/?q=Johannesburg,South+Africa'
     }
-  ];
-
-  const socialLinks = [
-    { icon: faGithub, url: 'https://github.com/' },
-    { icon: faLinkedinIn, url: 'https://linkedin.com/' },
-    { icon: faTwitter, url: 'https://twitter.com/' },
-    { icon: faInstagram, url: 'https://instagram.com/' }
   ];
 
   return (
@@ -162,80 +115,9 @@ const Contact = () => {
             ))}
           </div>
           
-          <div className={`contact-form-container ${isVisible ? 'animate' : ''}`}>
-            <div className="contact-form">
-              <h2 className="form-title">Send Message</h2>
-              
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Your Name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Your Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <textarea
-                    className="form-control"
-                    placeholder="Your Message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                  ></textarea>
-                </div>
-                
-                <button type="submit" className="submit-btn">
-                  Send Message <FontAwesomeIcon icon={faPaperPlane} />
-                </button>
-              </form>
-            </div>
-          </div>
         </div>
-        
-        <div className={`social-links ${isVisible ? 'animate' : ''}`}>
-          {socialLinks.map((link, index) => (
-            <a 
-              href={link.url} 
-              className="social-link" 
-              key={index}
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <FontAwesomeIcon icon={link.icon} />
-            </a>
-          ))}
-        </div>
+      
+
       </div>
     </section>
   );
