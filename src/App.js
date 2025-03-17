@@ -7,6 +7,7 @@ import Skills from './components/Skills/Skills';
 import About from './components/About/About';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import GoUpButton from './components/GoUpButton/GoUpButton';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <About />
       <Contact />
       <Footer />
+      <GoUpButton />
     </div>
   );
 }

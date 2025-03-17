@@ -31,56 +31,56 @@ const Projects = () => {
       title: 'Weather Nexus',
       description: 'A weather application that provides real-time weather data and forecasts for locations worldwide.',
       image: weatherNexus,
-      link: '#',
+      link: 'https://benighter.github.io/Weather-App/',
       color: '#5e72e4'
     },
     {
       title: 'Neolex',
       description: 'A modern legal research platform with advanced search capabilities and document management.',
       image: neolex,
-      link: '#',
+      link: 'https://benighter.github.io/Dictionary/',
       color: '#11cdef'
     },
     {
       title: 'Trivia Game',
       description: 'An interactive trivia game with multiple categories and difficulty levels.',
       image: triviaGame,
-      link: '#',
+      link: 'https://benighter.itch.io/trivia-master',
       color: '#2dce89'
     },
     {
       title: 'Movie Site',
       description: 'A movie database website with information on thousands of films, actors, and directors.',
       image: movieSite,
-      link: '#',
+      link: 'https://benighter.github.io/Movie-site/',
       color: '#fb6340'
     },
     {
       title: 'Clock App',
       description: 'A digital clock application with alarm, timer, and stopwatch functionality.',
       image: clock,
-      link: '#',
+      link: 'https://futuristic-clock.vercel.app/',
       color: '#ffd600'
     },
     {
       title: 'Duplicate Detective',
       description: 'A tool for finding and managing duplicate files on your computer.',
       image: duplicateDetective,
-      link: '#',
+      link: 'https://github.com/Benighter/DuplicateDetective',
       color: '#f5365c'
     },
     {
       title: 'AI Chatbot',
       description: 'An intelligent chatbot powered by machine learning for customer support.',
       image: chatbot,
-      link: '#',
+      link: 'https://github.com/Benighter/Chat-Bot',
       color: '#8965e0'
     },
     {
       title: 'AI Detector',
       description: 'A tool that can detect AI-generated content and distinguish it from human-written text.',
       image: aiDetect,
-      link: '#',
+      link: 'https://github.com/Benighter/AI-detect',
       color: '#1aae6f'
     }
   ];
@@ -294,7 +294,7 @@ const Projects = () => {
                 <div className="project-info">
                   <h2>{project.title}</h2>
                   <p>{project.description}</p>
-                  <a href={project.link} className="view-more" style={{ color: project.color }}>
+                  <a href={project.link} className="view-more" style={{ color: project.color }} target="_blank" rel="noopener noreferrer">
                     Explore Project <FontAwesomeIcon icon={faExternalLinkAlt} />
                   </a>
                 </div>

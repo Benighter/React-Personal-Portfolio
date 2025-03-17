@@ -2,15 +2,55 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './About.css';
 import blenderImage from '../../assets/img/img-2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faDownload, 
+  faCode, 
+  faTools, 
+  faLightbulb, 
+  faHandshake,
+  faChartLine,
+  faCogs
+} from '@fortawesome/free-solid-svg-icons';
+import './About.css';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [activeTab, setActiveTab] = useState('about');
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
   const imgRef = useRef(null);
   const hoverTimerRef = useRef(null);
+
+  // Application & Tool Knowledge
+  const toolKnowledge = [
+    { name: 'Angular', proficiency: 90, color: '#DD0031' },
+    { name: 'JavaScript', proficiency: 95, color: '#F7DF1E' },
+    { name: 'PostgreSQL', proficiency: 85, color: '#336791' },
+    { name: 'Spring Boot', proficiency: 88, color: '#6DB33F' },
+    { name: 'CSS', proficiency: 92, color: '#1572B6' },
+    { name: 'HTML', proficiency: 95, color: '#E34F26' },
+    { name: 'Git', proficiency: 88, color: '#F05032' }
+  ];
+
+  // Technical Skills
+  const technicalSkills = [
+    { name: 'Overall Rating', initial: 1.5, current: 3.8 },
+    { name: 'Angular', initial: 1.2, current: 3.7 },
+    { name: 'HTML & CSS', initial: 1.3, current: 4.5 },
+    { name: 'Java Spring Boot', initial: 1.2, current: 3.6 },
+    { name: 'PostgreSQL', initial: 1.5, current: 4.3 },
+    { name: 'Git', initial: 1.7, current: 3.5 }
+  ];
+
+  // Soft Skills
+  const softSkills = [
+    { name: 'Problem Solving', rating: 4, description: 'Analytical thinking and creative solution finding' },
+    { name: 'Interpersonal Skills', rating: 3, description: 'Effective communication and relationship building' },
+    { name: 'Leadership', rating: 3, description: 'Team guidance and project management' },
+    { name: 'Team Collaboration', rating: 4, description: 'Working effectively in diverse teams' },
+    { name: 'Communication', rating: 3, description: 'Clear and concise information sharing' }
+  ];
 
   // Function to convert hex to rgba for styling
   const hexToRgba = (hex, alpha = 1) => {
@@ -121,20 +161,22 @@ const About = () => {
             <h2 className="job-title">Full Stack Developer & 3D Designer</h2>
             <div className="about-text-container">
               <p className="about-text">
-                I'm a passionate Full Stack Developer with expertise in both front-end and back-end technologies. 
-                I specialize in creating responsive, user-friendly web applications using modern frameworks and libraries.
-                With a strong foundation in JavaScript, React, Node.js, and Python, I build scalable and efficient solutions 
-                for complex problems.
+                As a Full Stack Developer, I thrive on transforming innovative ideas into powerful, scalable applications. 
+                My expertise spans the entire development spectrum - from crafting intuitive user interfaces with React and 
+                Angular to architecting robust backend systems using Spring Boot and Node.js. I take pride in writing clean, 
+                maintainable code that stands the test of time and scale.
               </p>
               <p className="about-text">
-                Beyond web development, I'm also skilled in 3D design using Blender, creating immersive visual experiences 
-                and assets for various applications. My background in teaching (TEFL certified) has enhanced my communication 
-                skills and ability to explain complex concepts in simple terms.
+                What sets me apart is my unique blend of technical prowess and creative vision. With advanced proficiency 
+                in PostgreSQL database design, RESTful API development, and modern JavaScript frameworks, I build seamless 
+                digital experiences that users love. My commitment to responsive design and performance optimization ensures 
+                that every application I create delivers exceptional user experience across all devices.
               </p>
               <p className="about-text">
-                I'm constantly learning and exploring new technologies to stay at the forefront of the rapidly evolving 
-                tech landscape. I'm passionate about creating clean, efficient code and delivering high-quality products 
-                that exceed client expectations.
+                I'm not just a developer; I'm a problem solver and innovator. Whether it's optimizing complex database queries, 
+                implementing secure authentication systems, or creating intuitive user interfaces, I approach each challenge 
+                with analytical thinking and creative solutions. My experience with Git version control and agile methodologies 
+                makes me an effective team player who can adapt quickly to changing project requirements.
               </p>
             </div>
             <a href="/Resume/My Resume.pdf" className="resume-btn" target="_blank" rel="noopener noreferrer">
