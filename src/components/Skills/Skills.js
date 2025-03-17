@@ -2,37 +2,38 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Skills.css';
 
 const Skills = () => {
-  const skillsRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const skillsRef = useRef(null);
   const titleRef = useRef(null);
 
   // Application & Tool Knowledge
   const toolKnowledge = useMemo(() => [
-    { name: 'Angular', color: '#DD0031' },
-    { name: 'PostgreSQL', color: '#336791' },
-    { name: 'Spring Boot', color: '#6DB33F' },
-    { name: 'Tailwind CSS', color: '#38B2AC' },
-    { name: 'HTML', color: '#E34F26' },
-    { name: 'Git', color: '#F05032' }
+    { name: 'Angular', color: '#DD0031', rgb: '221, 0, 49' },
+    { name: 'JavaScript', color: '#F7DF1E', rgb: '247, 223, 30' },
+    { name: 'PostgreSQL', color: '#336791', rgb: '51, 103, 145' },
+    { name: 'Spring Boot', color: '#6DB33F', rgb: '109, 179, 63' },
+    { name: 'CSS', color: '#1572B6', rgb: '21, 114, 182' },
+    { name: 'HTML', color: '#E34F26', rgb: '227, 79, 38' },
+    { name: 'Git', color: '#F05032', rgb: '240, 80, 50' }
   ], []);
 
   // Technical Skills with initial and final assessment values
   const technicalSkills = useMemo(() => [
-    { name: 'Overall Rating', initial: 1.5, final: 3.8, color: '#e74c3c' },
-    { name: 'Angular', initial: 1.2, final: 3.7, color: '#3498db' },
-    { name: 'HTML & CSS', initial: 1.3, final: 4.5, color: '#2ecc71' },
-    { name: 'Java Spring Boot', initial: 1.2, final: 3.6, color: '#9b59b6' },
-    { name: 'PostgreSQL', initial: 1.5, final: 4.3, color: '#f39c12' },
-    { name: 'Git', initial: 1.7, final: 3.5, color: '#1abc9c' }
+    { name: 'Overall Rating', initial: 1.5, final: 3.8, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'Angular', initial: 1.2, final: 3.7, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'HTML & CSS', initial: 1.3, final: 4.5, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'Java Spring Boot', initial: 1.2, final: 3.6, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'PostgreSQL', initial: 1.5, final: 4.3, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'Git', initial: 1.7, final: 3.5, color: '#00BFFF', rgb: '0, 191, 255' }
   ], []);
 
   // Soft Skills
   const softSkills = useMemo(() => [
-    { name: 'Problem Solving', rating: '4/5', color: '#e74c3c', percent: 80 },
-    { name: 'Interpersonal Skills', rating: '3/5', color: '#3498db', percent: 60 },
-    { name: 'Leadership Skills', rating: '3/5', color: '#2ecc71', percent: 60 },
-    { name: 'Team Player Skills', rating: '4/5', color: '#9b59b6', percent: 80 },
-    { name: 'Communication', rating: '3/5', color: '#f39c12', percent: 60 }
+    { name: 'Problem Solving', rating: '4/5', color: '#FF6B6B', rgb: '255, 107, 107', percent: 80 },
+    { name: 'Interpersonal Skills', rating: '3/5', color: '#FF6B6B', rgb: '255, 107, 107', percent: 60 },
+    { name: 'Leadership Skills', rating: '3/5', color: '#FF6B6B', rgb: '255, 107, 107', percent: 60 },
+    { name: 'Team Player Skills', rating: '4/5', color: '#FF6B6B', rgb: '255, 107, 107', percent: 80 },
+    { name: 'Communication', rating: '3/5', color: '#FF6B6B', rgb: '255, 107, 107', percent: 60 }
   ], []);
 
   useEffect(() => {
@@ -40,18 +41,24 @@ const Skills = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect();
+          observer.unobserve(skillsRef.current);
         }
       },
       { threshold: 0.1 }
     );
 
-    const currentRef = skillsRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
+    if (skillsRef.current) {
+      observer.observe(skillsRef.current);
     }
 
-    // Add letter animation to title
+    return () => {
+      if (skillsRef.current) {
+        observer.unobserve(skillsRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (isVisible && titleRef.current) {
       const title = titleRef.current;
       const text = title.textContent;
@@ -65,34 +72,7 @@ const Skills = () => {
         title.appendChild(span);
       }
     }
-
-    return () => {
-      if (currentRef) {
-        observer.disconnect();
-      }
-    };
   }, [isVisible]);
-
-  // Animation for bars
-  useEffect(() => {
-    if (isVisible) {
-      const bars = document.querySelectorAll('.skill-progress-bar');
-      bars.forEach((bar) => {
-        bar.style.width = bar.getAttribute('data-width');
-      });
-    }
-  }, [isVisible]);
-
-  function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    
-    // Parse the hex values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    
-    return `${r}, ${g}, ${b}`;
-  }
 
   return (
     <section id="skills" ref={skillsRef}>
@@ -102,21 +82,20 @@ const Skills = () => {
           <h1 className="section-title" ref={titleRef}>Skills</h1>
           <div className="title-underline"></div>
         </div>
-        <p className={`skills-description ${isVisible ? 'animate' : ''}`}>
-          My technical expertise spans across various technologies and tools, complemented by strong soft skills that enable effective collaboration and project delivery.
-        </p>
+
 
         {/* Application & Tool Knowledge */}
         <div className={`tool-knowledge-section ${isVisible ? 'animate' : ''}`}>
-          <h2>Application & Tool Knowledge</h2>
+          <h2>APPLICATION & TOOL KNOWLEDGE</h2>
           <div className="tool-knowledge-container">
             {toolKnowledge.map((tool, index) => (
               <div 
                 className="tool-item" 
-                key={index} 
+                key={index}
                 style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  '--tool-color': tool.color
+                  '--tool-color': tool.color,
+                  '--tool-rgb': tool.rgb,
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
                 <span>{tool.name}</span>
@@ -127,37 +106,40 @@ const Skills = () => {
 
         {/* Technical Skills */}
         <div className={`technical-skills-section ${isVisible ? 'animate' : ''}`}>
-          <h2>Technical Skills</h2>
+          <h2>TECHNICAL SKILLS</h2>
           <div className="technical-skills-container">
             {technicalSkills.map((skill, index) => (
               <div 
                 className="technical-skill-item" 
                 key={index}
                 style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  '--skill-color': skill.color
+                  '--skill-color': skill.color,
+                  '--skill-rgb': skill.rgb,
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
-                <div className="skill-name">{skill.name}</div>
+                <div className="skill-header">
+                  <div className="skill-name">{skill.name}</div>
+                </div>
                 <div className="skill-bar-container">
                   <div className="skill-bar-background">
                     <div 
                       className="skill-progress-bar initial" 
                       style={{ 
-                        width: isVisible ? `${skill.initial * 20}%` : '0%',
-                        backgroundColor: `rgba(${hexToRgb(skill.color)}, 0.5)`
+                        width: isVisible ? `${skill.initial * 20}%` : '0%'
                       }}
-                      data-width={`${skill.initial * 20}%`}
                     ></div>
                     <div 
                       className="skill-progress-bar final" 
                       style={{ 
-                        width: isVisible ? `${skill.final * 20}%` : '0%',
-                        backgroundColor: skill.color
+                        width: isVisible ? `${skill.final * 20}%` : '0%'
                       }}
-                      data-width={`${skill.final * 20}%`}
                     ></div>
                   </div>
+                </div>
+                <div className="skill-details">
+                  <div className="skill-level">Initial: {skill.initial}/5</div>
+                  <div className="skill-level">Final: {skill.final}/5</div>
                 </div>
               </div>
             ))}
@@ -167,7 +149,7 @@ const Skills = () => {
                 <span>Initial Assessment</span>
               </div>
               <div className="legend-item">
-                <div className="legend-color final" style={{ backgroundColor: '#e74c3c' }}></div>
+                <div className="legend-color final"></div>
                 <span>Final Assessment</span>
               </div>
             </div>
@@ -176,7 +158,7 @@ const Skills = () => {
 
         {/* Soft Skills */}
         <div className={`soft-skills-section ${isVisible ? 'animate' : ''}`}>
-          <h2>Soft Skills</h2>
+          <h2>SOFT SKILLS</h2>
           <div className="soft-skills-container">
             <div className="most-improved">
               <h3>Most Improved Skill:</h3>
@@ -187,16 +169,15 @@ const Skills = () => {
                 className="soft-skill-item" 
                 key={index}
                 style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  '--soft-skill-color': skill.color
+                  '--soft-skill-color': skill.color,
+                  '--soft-skill-rgb': skill.rgb,
+                  '--rating-percent': skill.percent,
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
-                <div 
-                  className="skill-rating-circle"
-                  style={{ '--rating-percent': skill.percent }}
-                >
+                <div className="skill-rating-circle">
                   <div className="circle-inner">
-                    <span style={{ color: skill.color }}>{skill.rating}</span>
+                    <span>{skill.rating}</span>
                   </div>
                 </div>
                 <h3>{skill.name}</h3>
@@ -205,15 +186,11 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* Shaper Review */}
+        {/* The Shaper Review */}
         <div className={`shaper-review-section ${isVisible ? 'animate' : ''}`}>
-          <h2>The Shaper Review</h2>
+          <h2>THE SHAPER REVIEW</h2>
           <div className="review-content">
-            <p>
-              He is a detail-oriented Full Stack developer who consistently
-              delivers high-quality work. His clear communication and
-              adaptability make him a valuable part of any development team.
-            </p>
+            <p>He is a detail-oriented Full Stack developer who consistently delivers high-quality work. His clear communication and adaptability make him a valuable part of any development team.</p>
           </div>
         </div>
       </div>
