@@ -158,7 +158,7 @@ const About = () => {
             </div>
           </div>
           <div className={`col-right ${isVisible ? 'animate' : ''}`}>
-            <h2 className="job-title">Full Stack Developer & 3D Designer</h2>
+            <h2 className="job-title">Junior Fullstack Developer</h2>
             <div className="about-text-container">
               <p className="about-text">
                 As a Full Stack Developer, I thrive on transforming innovative ideas into powerful, scalable applications. 
@@ -179,6 +179,9 @@ const About = () => {
                 makes me an effective team player who can adapt quickly to changing project requirements.
               </p>
             </div>
+            <br />
+            <br />
+            <br />
             <a href="/Resume/My Resume.pdf" className="resume-btn" target="_blank" rel="noopener noreferrer">
               Download Resume <FontAwesomeIcon icon={faDownload} />
             </a>
