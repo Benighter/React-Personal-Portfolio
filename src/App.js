@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Services from './components/Services/Services';
@@ -10,23 +10,9 @@ import Footer from './components/Footer/Footer';
 import './App.css';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Check if user previously enabled dark mode
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    setDarkMode(savedDarkMode);
-  }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode.toString());
-  };
-
   return (
-    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+    <div className="app">
+      <Header />
       <Hero />
       <Services />
       <Projects />

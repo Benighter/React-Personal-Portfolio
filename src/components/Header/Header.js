@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 
-const Header = ({ darkMode, toggleDarkMode }) => {
+const Header = () => {
   const [hamburgerActive, setHamburgerActive] = useState(false);
   const [headerBackground, setHeaderBackground] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -106,15 +104,6 @@ const Header = ({ darkMode, toggleDarkMode }) => {
               <li><a href="#skills" data-after="Skills" onClick={handleNavClick} className={activeSection === 'skills' ? 'active' : ''}>Skills</a></li>
               <li><a href="#about" data-after="About" onClick={handleNavClick} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
               <li><a href="#contact" data-after="Contact" onClick={handleNavClick} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
-              <li>
-                <button 
-                  id="darkModeToggle" 
-                  aria-label="Toggle dark mode"
-                  onClick={toggleDarkMode}
-                >
-                  <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
-                </button>
-              </li>
             </ul>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './About.css';
 import blenderImage from '../../assets/img/img-2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,8 +6,11 @@ import { faDownload, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
+  const imgRef = useRef(null);
+  const hoverTimerRef = useRef(null);
 
   // Function to convert hex to rgba for styling
   const hexToRgba = (hex, alpha = 1) => {
@@ -15,6 +18,18 @@ const About = () => {
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+
+  // Debounce function to prevent rapid state changes
+  const debounce = (func, delay) => {
+    return (...args) => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+      hoverTimerRef.current = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
 
   useEffect(() => {
@@ -51,8 +66,27 @@ const About = () => {
       if (aboutRef.current) {
         observer.unobserve(aboutRef.current);
       }
+      // Clear any pending timers on unmount
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
     };
   }, [isVisible]);
+
+  // Handle mouse enter/leave with debouncing to prevent rapid state changes
+  const handleMouseEnter = useCallback(
+    debounce(() => {
+      setIsHovering(true);
+    }, 50),
+    []
+  );
+
+  const handleMouseLeave = useCallback(
+    debounce(() => {
+      setIsHovering(false);
+    }, 50),
+    []
+  );
 
   // Skills data for potential future use
   const skills = [
@@ -73,7 +107,12 @@ const About = () => {
         </div>
         <div className="about-content">
           <div className={`col-left ${isVisible ? 'animate' : ''}`}>
-            <div className="about-img">
+            <div 
+              className={`about-img ${isHovering ? 'hovering' : ''}`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              ref={imgRef}
+            >
               <img src={blenderImage} alt="About Me" />
               <div className="img-overlay"></div>
             </div>
