@@ -242,6 +242,11 @@
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(50, 205, 50, 0.2);
+  width: 180px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Unique style for tool items - circuit board nodes */
@@ -796,6 +801,7 @@
 
   #skills .tool-item {
     padding: 15px 25px;
+    width: 150px;
   }
 
   #skills .most-improved h2 {
@@ -845,6 +851,10 @@
 
   #skills .review-content p {
     font-size: 1.3rem;
+  }
+
+  #skills .tool-item {
+    width: 160px;
   }
 }
 
