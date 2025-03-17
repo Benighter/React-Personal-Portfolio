@@ -48,6 +48,19 @@
   animation-delay: 3s;
 }
 
+#hero h2.hero-title {
+  display: block;
+  width: fit-content;
+  font-size: 2.5rem;
+  position: relative;
+  color: transparent;
+  animation: text_reveal_title 0.5s ease forwards;
+  animation-delay: 4s;
+  margin-top: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+}
+
 #hero h1 span {
   position: absolute;
   top: 0;
@@ -57,6 +70,17 @@
   background-color: crimson;
   animation: text_reveal_box 1s ease;
   animation-delay: 0.5s;
+}
+
+#hero h2.hero-title span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: #9c27b0;
+  animation: text_reveal_box 1s ease;
+  animation-delay: 3.5s;
 }
 
 #hero h1:nth-child(1) span {
@@ -79,6 +103,14 @@
   animation-play-state: running;
 }
 
+#hero h2.hero-title.animate {
+  animation-play-state: running;
+}
+
+#hero h2.hero-title.animate span {
+  animation-play-state: running;
+}
+
 #hero .cta {
   display: inline-block;
   padding: 10px 30px;
@@ -92,7 +124,7 @@
   transition: 0.3s ease;
   transition-property: background-color, color;
   animation: fadeIn 1s ease forwards;
-  animation-delay: 3.5s;
+  animation-delay: 4.5s;
   opacity: 0;
 }
 
@@ -119,6 +151,13 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes text_reveal_title {
+  100% {
+    color: #9c27b0;
+    font-weight: 500;
   }
 }
 
@@ -169,5 +208,9 @@
 @media only screen and (min-width: 768px) {
   #hero h1 {
     font-size: 7rem;
+  }
+  
+  #hero h2.hero-title {
+    font-size: 3.5rem;
   }
 } 

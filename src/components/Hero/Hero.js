@@ -5,6 +5,7 @@ const Hero = () => {
   const nameRef = useRef(null);
   const helloRef = useRef(null);
   const myNameRef = useRef(null);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     // Animate text reveal
@@ -19,6 +20,7 @@ const Hero = () => {
     animateText(helloRef, 500);
     animateText(myNameRef, 1500);
     animateText(nameRef, 2500);
+    animateText(titleRef, 3500);
   }, []);
 
   return (
@@ -28,6 +30,7 @@ const Hero = () => {
           <h1 ref={helloRef}>Hello, <span></span></h1>
           <h1 ref={myNameRef}>My Name is <span></span></h1>
           <h1 ref={nameRef}>Bennet <span></span></h1>
+          <h2 ref={titleRef} className="hero-title">Junior Fullstack Developer <span></span></h2>
           <a href="#projects" type="button" className="cta">Projects</a>
         </div>
       </div>

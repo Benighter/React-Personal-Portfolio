@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.css';
-import blenderImage from '../../assets/img/Blender.png';
+import blenderImage from '../../assets/img/img-2.png';
 
 const About = () => {
   return (
@@ -30,7 +30,7 @@ const About = () => {
             tech landscape. I'm passionate about creating clean, efficient code and delivering high-quality products 
             that exceed client expectations.
           </p>
-          <a href="/Resume/Bennet_Nkolele_Resume.pdf" className="cta" target="_blank" rel="noopener noreferrer">Download Resume</a>
+          <a href="/Resume/My Resume.pdf" className="cta" target="_blank" rel="noopener noreferrer">Download Resume</a>
         </div>
       </div>
     </section>
