@@ -1,7 +1,5 @@
 # Bennet Nkolele Portfolio - React Version
 
-![Portfolio Preview](public/img/portfolio-preview.png)
-
 ## Author
 **Bennet Nkolele** - [Benighter](https://github.com/Benighter)
 
