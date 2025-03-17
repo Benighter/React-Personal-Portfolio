@@ -2,12 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import './About.css';
 import blenderImage from '../../assets/img/img-2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
+
+  // Function to convert hex to rgba for styling
+  const hexToRgba = (hex, alpha = 1) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,6 +53,15 @@ const About = () => {
       }
     };
   }, [isVisible]);
+
+  // Skills data for potential future use
+  const skills = [
+    { name: 'JavaScript', level: 90 },
+    { name: 'React', level: 85 },
+    { name: 'Node.js', level: 80 },
+    { name: 'Python', level: 75 },
+    { name: 'Blender', level: 70 }
+  ];
 
   return (
     <section id="about" ref={aboutRef}>

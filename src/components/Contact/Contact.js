@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faEnvelope, faMapMarkerAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faPhone, 
+  faEnvelope, 
+  faMapMarkerAlt, 
+  faPaperPlane, 
+  faUser, 
+  faComment 
+} from '@fortawesome/free-solid-svg-icons';
+import { 
+  faGithub, 
+  faLinkedinIn, 
+  faTwitter, 
+  faInstagram 
+} from '@fortawesome/free-brands-svg-icons';
 import './Contact.css';
 
 const Contact = () => {
@@ -10,6 +23,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   });
 
@@ -29,6 +43,7 @@ const Contact = () => {
     setFormData({
       name: '',
       email: '',
+      subject: '',
       message: ''
     });
   };
@@ -86,20 +101,27 @@ const Contact = () => {
       icon: faPhone,
       title: 'Phone',
       info: '+27 81 090 3232',
-      color: '#e74c3c'
+      link: 'tel:+27810903232'
     },
     {
       icon: faEnvelope,
       title: 'Email',
       info: 'bennet.nkolele1998@gmail.com',
-      color: '#3498db'
+      link: 'mailto:bennet.nkolele1998@gmail.com'
     },
     {
       icon: faMapMarkerAlt,
       title: 'Address',
       info: 'Johannesburg, South Africa',
-      color: '#2ecc71'
+      link: 'https://maps.google.com/?q=Johannesburg,South+Africa'
     }
+  ];
+
+  const socialLinks = [
+    { icon: faGithub, url: 'https://github.com/' },
+    { icon: faLinkedinIn, url: 'https://linkedin.com/' },
+    { icon: faTwitter, url: 'https://twitter.com/' },
+    { icon: faInstagram, url: 'https://instagram.com/' }
   ];
 
   return (
@@ -110,36 +132,109 @@ const Contact = () => {
           <h1 className="section-title" ref={titleRef}>Contact</h1>
           <div className="title-underline"></div>
         </div>
-        <p className={`contact-description ${isVisible ? 'animate' : ''}`}>
-          Feel free to reach out to me through any of the following channels or use the contact form below.
-        </p>
-        <div className={`contact-content ${isVisible ? 'animate' : ''}`}>
-          <div className="contact-info-container">
+        
+        <div className="contact-content">
+          <div className={`contact-info ${isVisible ? 'animate' : ''}`}>
+            <h2 className="contact-info-title">Get In Touch</h2>
+            
             {contactItems.map((item, index) => (
               <div 
                 className="contact-item" 
                 key={index}
-                style={{ 
-                  animationDelay: `${index * 0.2}s`,
-                  borderTop: `4px solid ${item.color}`
-                }}
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <div 
-                  className="icon"
-                  style={{ background: `rgba(${hexToRgb(item.color)}, 0.1)` }}
-                >
-                  <FontAwesomeIcon 
-                    icon={item.icon} 
-                    style={{ color: item.color }}
-                  />
+                <div className="contact-icon">
+                  <FontAwesomeIcon icon={item.icon} />
                 </div>
-                <div className="contact-info">
-                  <h2>{item.title}</h2>
-                  <p>{item.info}</p>
+                <div className="contact-details">
+                  <h3 className="contact-item-title">{item.title}</h3>
+                  <p className="contact-item-info">
+                    {item.link ? (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer">
+                        {item.info}
+                      </a>
+                    ) : (
+                      item.info
+                    )}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
+          
+          <div className={`contact-form-container ${isVisible ? 'animate' : ''}`}>
+            <div className="contact-form">
+              <h2 className="form-title">Send Message</h2>
+              
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Your Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Your Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <textarea
+                    className="form-control"
+                    placeholder="Your Message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  ></textarea>
+                </div>
+                
+                <button type="submit" className="submit-btn">
+                  Send Message <FontAwesomeIcon icon={faPaperPlane} />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div className={`social-links ${isVisible ? 'animate' : ''}`}>
+          {socialLinks.map((link, index) => (
+            <a 
+              href={link.url} 
+              className="social-link" 
+              key={index}
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <FontAwesomeIcon icon={link.icon} />
+            </a>
+          ))}
         </div>
       </div>
     </section>

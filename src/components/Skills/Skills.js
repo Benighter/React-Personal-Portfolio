@@ -28,11 +28,11 @@ const Skills = () => {
 
   // Soft Skills
   const softSkills = useMemo(() => [
-    { name: 'Problem Solving', rating: '4/5', color: '#e74c3c' },
-    { name: 'Interpersonal Skills', rating: '3/5', color: '#3498db' },
-    { name: 'Leadership Skills', rating: '3/5', color: '#2ecc71' },
-    { name: 'Team Player Skills', rating: '4/5', color: '#9b59b6' },
-    { name: 'Communication', rating: '3/5', color: '#f39c12' }
+    { name: 'Problem Solving', rating: '4/5', color: '#e74c3c', percent: 80 },
+    { name: 'Interpersonal Skills', rating: '3/5', color: '#3498db', percent: 60 },
+    { name: 'Leadership Skills', rating: '3/5', color: '#2ecc71', percent: 60 },
+    { name: 'Team Player Skills', rating: '4/5', color: '#9b59b6', percent: 80 },
+    { name: 'Communication', rating: '3/5', color: '#f39c12', percent: 60 }
   ], []);
 
   useEffect(() => {
@@ -115,8 +115,8 @@ const Skills = () => {
                 className="tool-item" 
                 key={index} 
                 style={{ 
-                  borderColor: tool.color,
-                  animationDelay: `${index * 0.1}s`
+                  animationDelay: `${index * 0.1}s`,
+                  '--tool-color': tool.color
                 }}
               >
                 <span>{tool.name}</span>
@@ -135,7 +135,7 @@ const Skills = () => {
                 key={index}
                 style={{ 
                   animationDelay: `${index * 0.1}s`,
-                  borderTop: `4px solid ${skill.color}`
+                  '--skill-color': skill.color
                 }}
               >
                 <div className="skill-name">{skill.name}</div>
@@ -167,7 +167,7 @@ const Skills = () => {
                 <span>Initial Assessment</span>
               </div>
               <div className="legend-item">
-                <div className="legend-color final"></div>
+                <div className="legend-color final" style={{ backgroundColor: '#e74c3c' }}></div>
                 <span>Final Assessment</span>
               </div>
             </div>
@@ -188,14 +188,14 @@ const Skills = () => {
                 key={index}
                 style={{ 
                   animationDelay: `${index * 0.1}s`,
-                  borderTop: `4px solid ${skill.color}`
+                  '--soft-skill-color': skill.color
                 }}
               >
                 <div 
                   className="skill-rating-circle"
-                  style={{ background: `rgba(${hexToRgb(skill.color)}, 0.1)` }}
+                  style={{ '--rating-percent': skill.percent }}
                 >
-                  <div className="circle-inner" style={{ borderColor: skill.color }}>
+                  <div className="circle-inner">
                     <span style={{ color: skill.color }}>{skill.rating}</span>
                   </div>
                 </div>
