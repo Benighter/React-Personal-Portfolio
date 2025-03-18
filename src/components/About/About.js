@@ -3,74 +3,49 @@ import './About.css';
 import blenderImage from '../../assets/img/img-2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faDownload, 
-  faCode, 
-  faTools, 
-  faLightbulb, 
-  faHandshake,
-  faChartLine,
-  faCogs
+  faDownload
 } from '@fortawesome/free-solid-svg-icons';
 import './About.css';
+
+// Move debounce outside component
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [activeTab, setActiveTab] = useState('about');
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
   const imgRef = useRef(null);
-  const hoverTimerRef = useRef(null);
 
-  // Application & Tool Knowledge
-  const toolKnowledge = [
-    { name: 'Angular', proficiency: 90, color: '#DD0031' },
-    { name: 'JavaScript', proficiency: 95, color: '#F7DF1E' },
-    { name: 'PostgreSQL', proficiency: 85, color: '#336791' },
-    { name: 'Spring Boot', proficiency: 88, color: '#6DB33F' },
-    { name: 'CSS', proficiency: 92, color: '#1572B6' },
-    { name: 'HTML', proficiency: 95, color: '#E34F26' },
-    { name: 'Git', proficiency: 88, color: '#F05032' }
-  ];
+  // Memoize the handlers with useCallback
+  const handleMouseEnter = useCallback(() => {
+    setIsHovering(true);
+  }, []);
 
-  // Technical Skills
-  const technicalSkills = [
-    { name: 'Overall Rating', initial: 1.5, current: 3.8 },
-    { name: 'Angular', initial: 1.2, current: 3.7 },
-    { name: 'HTML & CSS', initial: 1.3, current: 4.5 },
-    { name: 'Java Spring Boot', initial: 1.2, current: 3.6 },
-    { name: 'PostgreSQL', initial: 1.5, current: 4.3 },
-    { name: 'Git', initial: 1.7, current: 3.5 }
-  ];
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false);
+  }, []);
 
-  // Soft Skills
-  const softSkills = [
-    { name: 'Problem Solving', rating: 4, description: 'Analytical thinking and creative solution finding' },
-    { name: 'Interpersonal Skills', rating: 3, description: 'Effective communication and relationship building' },
-    { name: 'Leadership', rating: 3, description: 'Team guidance and project management' },
-    { name: 'Team Collaboration', rating: 4, description: 'Working effectively in diverse teams' },
-    { name: 'Communication', rating: 3, description: 'Clear and concise information sharing' }
-  ];
+  // Create debounced versions of the handlers
+  const debouncedMouseEnter = useCallback(
+    debounce(handleMouseEnter, 50),
+    [handleMouseEnter]
+  );
 
-  // Function to convert hex to rgba for styling
-  const hexToRgba = (hex, alpha = 1) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  };
-
-  // Debounce function to prevent rapid state changes
-  const debounce = (func, delay) => {
-    return (...args) => {
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
-      }
-      hoverTimerRef.current = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
+  const debouncedMouseLeave = useCallback(
+    debounce(handleMouseLeave, 50),
+    [handleMouseLeave]
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -106,36 +81,8 @@ const About = () => {
       if (aboutRef.current) {
         observer.unobserve(aboutRef.current);
       }
-      // Clear any pending timers on unmount
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
-      }
     };
   }, [isVisible]);
-
-  // Handle mouse enter/leave with debouncing to prevent rapid state changes
-  const handleMouseEnter = useCallback(
-    debounce(() => {
-      setIsHovering(true);
-    }, 50),
-    []
-  );
-
-  const handleMouseLeave = useCallback(
-    debounce(() => {
-      setIsHovering(false);
-    }, 50),
-    []
-  );
-
-  // Skills data for potential future use
-  const skills = [
-    { name: 'JavaScript', level: 90 },
-    { name: 'React', level: 85 },
-    { name: 'Node.js', level: 80 },
-    { name: 'Python', level: 75 },
-    { name: 'Blender', level: 70 }
-  ];
 
   return (
     <section id="about" ref={aboutRef}>
@@ -149,8 +96,8 @@ const About = () => {
           <div className={`col-left ${isVisible ? 'animate' : ''}`}>
             <div 
               className={`about-img ${isHovering ? 'hovering' : ''}`}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={debouncedMouseEnter}
+              onMouseLeave={debouncedMouseLeave}
               ref={imgRef}
             >
               <img src={blenderImage} alt="About Me" />
