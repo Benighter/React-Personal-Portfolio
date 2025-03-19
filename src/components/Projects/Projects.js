@@ -12,6 +12,7 @@ import clock from '../../assets/img/Clock.png';
 import duplicateDetective from '../../assets/img/DuplicateDetective.png';
 import chatbot from '../../assets/img/Chatbot.png';
 import aiDetect from '../../assets/img/AI Detect.png';
+import colorSwitch from '../../assets/img/colorSwitch.png';
 
 const Projects = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,6 +28,13 @@ const Projects = () => {
   const starsCreatedRef = useRef(false);
 
   const projects = [
+    {
+      title: 'Color Switch Clone',
+      description: 'An addictive arcade game where players navigate a ball through color-coded obstacles, featuring progressive levels and power-ups.',
+      image: colorSwitch,
+      link: 'https://color-switch-clone.vercel.app/',
+      color: '#ff6b6b'
+    },
     {
       title: 'Weather Nexus',
       description: 'A weather application that provides real-time weather data and forecasts for locations worldwide.',
@@ -61,27 +69,6 @@ const Projects = () => {
       image: clock,
       link: 'https://futuristic-clock.vercel.app/',
       color: '#ffd600'
-    },
-    {
-      title: 'Duplicate Detective',
-      description: 'A tool for finding and managing duplicate files on your computer.',
-      image: duplicateDetective,
-      link: 'https://github.com/Benighter/DuplicateDetective',
-      color: '#f5365c'
-    },
-    {
-      title: 'AI Chatbot',
-      description: 'An intelligent chatbot powered by machine learning for customer support.',
-      image: chatbot,
-      link: 'https://github.com/Benighter/Chat-Bot',
-      color: '#8965e0'
-    },
-    {
-      title: 'AI Detector',
-      description: 'A tool that can detect AI-generated content and distinguish it from human-written text.',
-      image: aiDetect,
-      link: 'https://github.com/Benighter/AI-detect',
-      color: '#1aae6f'
     }
   ];
 

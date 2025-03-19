@@ -108,7 +108,7 @@ const About = () => {
             <h2 className="job-title">Junior Fullstack Developer</h2>
             <div className="about-text-container">
               <p className="about-text">
-                As a Full Stack Developer, I thrive on transforming innovative ideas into powerful, scalable applications. 
+                As a Junior fullstack Developer, I thrive on transforming innovative ideas into powerful, scalable applications. 
                 My expertise spans the entire development spectrum - from crafting intuitive user interfaces with React and 
                 Angular to architecting robust backend systems using Spring Boot and Node.js. I take pride in writing clean, 
                 maintainable code that stands the test of time and scale.
