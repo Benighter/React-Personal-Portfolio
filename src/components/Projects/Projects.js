@@ -1,6 +1,19 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faExternalLinkAlt, faRocket, faStar } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faRocket, 
+  faCode, 
+  faMobileAlt, 
+  faGamepad, 
+  faPalette, 
+  faGlobe,
+  faAtom,
+  faSatellite,
+  faMeteor,
+  faSpaceShuttle
+} from '@fortawesome/free-solid-svg-icons';
 import './Projects.css';
 
 // Import project images
@@ -9,175 +22,243 @@ import neolex from '../../assets/img/Neolex.png';
 import triviaGame from '../../assets/img/Trivia Game.png';
 import movieSite from '../../assets/img/Movie Site.png';
 import clock from '../../assets/img/Clock.png';
-import duplicateDetective from '../../assets/img/DuplicateDetective.png';
-import chatbot from '../../assets/img/Chatbot.png';
-import aiDetect from '../../assets/img/AI Detect.png';
 import colorSwitch from '../../assets/img/colorSwitch.png';
 
+// Define categories with icons and colors
+const categories = [
+  { id: 'all', name: 'All Projects', icon: faAtom, color: '94, 114, 228' },
+  { id: 'web', name: 'Web Apps', icon: faGlobe, color: '45, 206, 137' },
+  { id: 'game', name: 'Games', icon: faGamepad, color: '251, 99, 64' },
+  { id: 'mobile', name: 'Mobile', icon: faMobileAlt, color: '17, 205, 239' },
+  { id: 'ui', name: 'UI/UX', icon: faPalette, color: '255, 214, 0' }
+];
+
+const ProjectCard = ({ project, index, moveCard, isFocused, onClick }) => {
+  const ref = useRef(null);
+  
+  const [{ isDragging }, drag] = useDrag({
+    type: 'project',
+    item: { index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [, drop] = useDrop({
+    accept: 'project',
+    hover: (item, monitor) => {
+      if (!ref.current) return;
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) return;
+      
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
+
+      moveCard(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+
+  drag(drop(ref));
+
+  return (
+    <div 
+      ref={ref}
+      className={`project-card ${isFocused ? 'focused' : ''} ${isDragging ? 'dragging' : ''}`}
+      style={{ 
+        '--project-color': project.color,
+        '--orbit-distance': `${150 + (index % 3) * 100}px`,
+        '--orbit-speed': `${10 + index % 5}s`,
+        '--orbit-delay': `-${index * 2}s`,
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'move'
+      }}
+      onClick={onClick}
+    >
+      <div className="content-wrapper">
+        <div className="project-img">
+          <img src={project.image} alt={project.title} />
+          <div className="project-overlay">
+            <a 
+              href={project.link} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="view-more" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FontAwesomeIcon icon={faRocket} className="project-icon" />
+            </a>
+          </div>
+        </div>
+        <div className="project-info">
+          <h2>{project.title}</h2>
+          <div className="project-categories">
+            {project.categories.map((cat, i) => {
+              const catData = categories.find(c => c.id === cat);
+              return (
+                <span 
+                  key={i} 
+                  className="project-category"
+                  style={{ 
+                    backgroundColor: `rgba(${catData?.color || '94, 114, 228'}, 0.2)`,
+                    border: `1px solid rgba(${catData?.color || '94, 114, 228'}, 0.4)`
+                  }}
+                >
+                  <FontAwesomeIcon icon={catData?.icon || faCode} />
+                  {cat}
+                </span>
+              );
+            })}
+          </div>
+          <p>{project.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Projects = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef(null);
-  const [itemWidth, setItemWidth] = useState(0);
-  const [totalProjects, setTotalProjects] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const projectsRef = useRef(null);
   const titleRef = useRef(null);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const resizeTimeoutRef = useRef(null);
-  const starsCreatedRef = useRef(false);
-
-  const projects = [
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [orbitActive, setOrbitActive] = useState(false);
+  const [focusedProject, setFocusedProject] = useState(null);
+  const [particles, setParticles] = useState([]);
+  const particleCanvasRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const [projectsList, setProjectsList] = useState([
     {
       title: 'Color Switch Clone',
-      description: 'An addictive arcade game where players navigate a ball through color-coded obstacles, featuring progressive levels and power-ups.',
+      description: 'An addictive arcade game where players navigate a ball through color-coded obstacles.',
       image: colorSwitch,
       link: 'https://color-switch-clone.vercel.app/',
-      color: '#ff6b6b'
+      color: '#ff6b6b',
+      categories: ['game', 'ui']
     },
     {
       title: 'Weather Nexus',
-      description: 'A weather application that provides real-time weather data and forecasts for locations worldwide.',
+      description: 'A weather application providing real-time weather data and forecasts.',
       image: weatherNexus,
       link: 'https://benighter.github.io/Weather-App/',
-      color: '#5e72e4'
+      color: '#5e72e4',
+      categories: ['web', 'ui']
     },
     {
       title: 'Neolex',
-      description: 'A modern legal research platform with advanced search capabilities and document management.',
+      description: 'A modern legal research platform with advanced search capabilities.',
       image: neolex,
       link: 'https://benighter.github.io/Dictionary/',
-      color: '#11cdef'
+      color: '#11cdef',
+      categories: ['web']
     },
     {
       title: 'Trivia Game',
-      description: 'An interactive trivia game with multiple categories and difficulty levels.',
+      description: 'An interactive trivia game with multiple categories.',
       image: triviaGame,
       link: 'https://benighter.itch.io/trivia-master',
-      color: '#2dce89'
+      color: '#2dce89',
+      categories: ['game']
     },
     {
       title: 'Movie Site',
-      description: 'A movie database website with information on thousands of films, actors, and directors.',
+      description: 'A movie database website with comprehensive film information.',
       image: movieSite,
       link: 'https://benighter.github.io/Movie-site/',
-      color: '#fb6340'
+      color: '#fb6340',
+      categories: ['web', 'ui']
     },
     {
       title: 'Clock App',
-      description: 'A digital clock application with alarm, timer, and stopwatch functionality.',
+      description: 'A digital clock with alarm and timer functionality.',
       image: clock,
       link: 'https://futuristic-clock.vercel.app/',
-      color: '#ffd600'
+      color: '#ffd600',
+      categories: ['web', 'ui']
     }
-  ];
-
-  // Throttled resize handler
-  const handleResize = useCallback(() => {
-    if (resizeTimeoutRef.current) {
-      clearTimeout(resizeTimeoutRef.current);
-    }
-    
-    resizeTimeoutRef.current = setTimeout(() => {
-      if (window.innerWidth <= 768) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-      
-      if (carouselRef.current) {
-        const projectItems = carouselRef.current.querySelectorAll('.project-item');
-        if (projectItems.length > 0) {
-          const width = projectItems[0].offsetWidth + 40; // 40px for gap
-          setItemWidth(width);
-          setTotalProjects(projects.length - (window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 3));
-        }
-      }
-    }, 200); // 200ms throttle
-  }, [projects.length]);
-
+  ]);
+  
   // Optimized letter animation
   const animateTitle = useCallback(() => {
-    if (isVisible && titleRef.current) {
+    if (isVisible && titleRef.current && !titleRef.current.querySelector('.letter-animation')) {
       const title = titleRef.current;
       const text = title.textContent;
+      title.textContent = '';
+      const fragment = document.createDocumentFragment();
       
-      // Only animate if not already animated
-      if (!title.querySelector('.letter-animation')) {
-        title.textContent = '';
-        
-        // Create a document fragment for better performance
-        const fragment = document.createDocumentFragment();
-        
-        for (let i = 0; i < text.length; i++) {
-          const span = document.createElement('span');
-          span.textContent = text[i];
-          span.style.animationDelay = `${i * 0.1}s`;
-          span.className = 'letter-animation';
-          fragment.appendChild(span);
-        }
-        
-        title.appendChild(fragment);
-      }
+      text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.style.animationDelay = `${i * 0.1}s`;
+        span.className = 'letter-animation';
+        fragment.appendChild(span);
+      });
+      
+      title.appendChild(fragment);
     }
   }, [isVisible]);
 
-  // Optimized star creation
-  const createStars = useCallback(() => {
-    // Only create stars once
-    if (starsCreatedRef.current) return;
+  // Create interactive particle system with reduced particle count
+  const initParticles = useCallback(() => {
+    if (!isVisible || !particleCanvasRef.current) return;
     
-    const projectsSection = document.getElementById('projects');
-    if (!projectsSection) return;
+    const canvas = particleCanvasRef.current;
+    const container = document.getElementById('projects');
+    if (!container) return;
     
-    // Reduced number of stars
-    const starCount = 20; // Reduced from 50
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
     
-    // Create a document fragment for better performance
-    const fragment = document.createDocumentFragment();
+    const particleCount = Math.min(Math.floor(window.innerWidth * 0.02), 50); // Reduced particle count
+    const newParticles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1, // Smaller particles
+      speedX: (Math.random() - 0.5) * 0.5, // Reduced speed
+      speedY: (Math.random() - 0.5) * 0.5,
+      color: `rgba(${Math.floor(Math.random() * 200 + 55)}, ${Math.floor(Math.random() * 200 + 55)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+    }));
     
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      
-      // Random position
-      const left = Math.random() * 100;
-      const top = Math.random() * 100;
-      
-      // Random size (smaller range)
-      const size = Math.random() * 2 + 1;
-      
-      // Random opacity
-      const opacity = Math.random() * 0.5 + 0.3;
-      
-      star.style.cssText = `
-        position: absolute;
-        left: ${left}%;
-        top: ${top}%;
-        width: ${size}px;
-        height: ${size}px;
-        background-color: white;
-        border-radius: 50%;
-        opacity: ${opacity};
-        z-index: 0;
-      `;
-      
-      fragment.appendChild(star);
-    }
+    setParticles(newParticles);
+  }, [isVisible]);
+
+  // Optimized particle animation
+  const animateParticles = useCallback(() => {
+    const canvas = particleCanvasRef.current;
+    if (!canvas) return;
     
-    projectsSection.appendChild(fragment);
-    starsCreatedRef.current = true;
-  }, []);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      
+      // Simple boundary checking
+      if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+      
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    animationFrameRef.current = requestAnimationFrame(animateParticles);
+  }, [particles]);
 
   useEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(projectsRef.current);
+          observer.unobserve(entry.target);
         }
       },
       { threshold: 0.1 }
@@ -187,116 +268,119 @@ const Projects = () => {
       observer.observe(projectsRef.current);
     }
     
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (projectsRef.current) {
-        observer.unobserve(projectsRef.current);
-      }
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-      }
-    };
-  }, [handleResize]);
+    return () => observer.disconnect();
+  }, []);
 
-  // Separate effect for animations to avoid unnecessary re-renders
   useEffect(() => {
     if (isVisible) {
       animateTitle();
-      createStars();
+      initParticles();
     }
-  }, [isVisible, animateTitle, createStars]);
+  }, [isVisible, animateTitle, initParticles]);
 
-  const nextSlide = () => {
-    if (currentIndex < totalProjects) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      // Smooth return to start
-      setCurrentIndex(0);
+  useEffect(() => {
+    if (isVisible && particles.length > 0) {
+      animationFrameRef.current = requestAnimationFrame(animateParticles);
     }
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [isVisible, particles, animateParticles]);
+
+  // Handle window resize for canvas
+  useEffect(() => {
+    const handleResize = () => isVisible && initParticles();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isVisible, initParticles]);
+
+  // Simplified category filter
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setFocusedProject(null);
   };
 
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    } else {
-      // Smooth return to end
-      setCurrentIndex(totalProjects);
-    }
-  };
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    setProjectsList((prevCards) => {
+      const newCards = [...prevCards];
+      const dragCard = newCards[dragIndex];
+      newCards.splice(dragIndex, 1);
+      newCards.splice(hoverIndex, 0, dragCard);
+      return newCards;
+    });
+  }, []);
 
-  function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    
-    // Parse the hex values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    
-    return `${r}, ${g}, ${b}`;
-  }
+  const filteredProjects = selectedCategory === 'all' 
+    ? projectsList 
+    : projectsList.filter(project => project.categories.includes(selectedCategory));
 
   return (
-    <section id="projects" ref={projectsRef}>
-      <div className="projects-background"></div>
-      <div className="projects container">
-        <div className={`projects-header ${isVisible ? 'animate' : ''}`}>
-          <h1 className="section-title" ref={titleRef}>Projects</h1>
-          <div className="title-underline"></div>
-        </div>
-        <p className={`projects-description ${isVisible ? 'animate' : ''}`}>
-          Explore my portfolio of web applications, tools, and creative projects that showcase my skills in development and design.
-        </p>
-        <div className={`projects-carousel ${isVisible ? 'animate' : ''}`}>
-          <div 
-            className="carousel-container" 
-            ref={carouselRef}
-            style={{ transform: `translateX(-${currentIndex * itemWidth}px)` }}
+    <DndProvider backend={HTML5Backend}>
+      <section id="projects" ref={projectsRef}>
+        <canvas ref={particleCanvasRef} className="particle-canvas"></canvas>
+        <div className="projects-background"></div>
+        
+        <div className="universe-controls">
+          <button 
+            className={`universe-control ${orbitActive ? 'active' : ''}`} 
+            onClick={() => {
+              setOrbitActive(!orbitActive);
+              setFocusedProject(null);
+            }}
+            title={orbitActive ? "Disable Orbit View" : "Enable Orbit View"}
           >
-            {projects.map((project, index) => (
-              <div 
-                className={`project-item ${isVisible ? 'animate' : ''}`} 
-                key={index}
-                style={{ 
-                  animationDelay: `${index * 0.1}s`, // Reduced from 0.2s
-                  '--project-color': project.color
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
+            <FontAwesomeIcon icon={faSatellite} />
+          </button>
+        </div>
+        
+        <div className="projects container">
+          <div className={`projects-header ${isVisible ? 'animate' : ''}`}>
+            <h1 className="section-title" ref={titleRef}>
+              <FontAwesomeIcon icon={faSpaceShuttle} className="title-icon" /> Projects Universe
+            </h1>
+            <div className="title-underline"></div>
+          </div>
+          
+          <div className={`category-filter ${isVisible ? 'animate' : ''}`}>
+            {categories.map((category, index) => (
+              <button
+                key={category.id}
+                className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(category.id)}
+                style={{ '--category-color': category.color }}
               >
-                <div className="project-img">
-                  <img src={project.image} alt={project.title} />
-                  <div className="project-overlay" style={{ background: `rgba(${hexToRgb(project.color)}, 0.7)` }}>
-                    {hoveredIndex === index && (
-                      <FontAwesomeIcon 
-                        icon={faRocket} 
-                        style={{ 
-                          fontSize: '2.5rem', // Reduced from 3rem
-                          color: 'white',
-                          animation: 'pulse 2s infinite'
-                        }} 
-                      />
-                    )}
-                  </div>
+                <div className="category-icon-wrapper">
+                  <FontAwesomeIcon icon={category.icon} />
                 </div>
-                <div className="project-info">
-                  <h2>{project.title}</h2>
-                  <p>{project.description}</p>
-                  <a href={project.link} className="view-more" style={{ color: project.color }} target="_blank" rel="noopener noreferrer">
-                    Explore Project <FontAwesomeIcon icon={faExternalLinkAlt} />
-                  </a>
-                </div>
-              </div>
+                <span>{category.name}</span>
+              </button>
             ))}
           </div>
-          <button className="nav-button prev" onClick={prevSlide}>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <button className="nav-button next" onClick={nextSlide}>
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          
+          <div className={`projects-grid ${isVisible ? 'animate' : ''} ${orbitActive ? 'orbit-active' : ''}`}>
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.title}
+                index={index}
+                project={project}
+                moveCard={moveCard}
+                isFocused={focusedProject === index}
+                onClick={() => setFocusedProject(focusedProject === index ? null : index)}
+              />
+            ))}
+          </div>
+          
+          {filteredProjects.length === 0 && (
+            <div className="no-projects">
+              <FontAwesomeIcon icon={faMeteor} className="empty-icon" />
+              <p>No projects found in this category.</p>
+            </div>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+    </DndProvider>
   );
 };
 
