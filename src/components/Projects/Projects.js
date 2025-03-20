@@ -4,8 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faRocket, 
-  faCode, 
-  faMobileAlt, 
+  faCode,   
   faGamepad, 
   faPalette, 
   faGlobe,
@@ -29,7 +28,6 @@ const categories = [
   { id: 'all', name: 'All Projects', icon: faAtom, color: '94, 114, 228' },
   { id: 'web', name: 'Web Apps', icon: faGlobe, color: '45, 206, 137' },
   { id: 'game', name: 'Games', icon: faGamepad, color: '251, 99, 64' },
-  { id: 'mobile', name: 'Mobile', icon: faMobileAlt, color: '17, 205, 239' },
   { id: 'ui', name: 'UI/UX', icon: faPalette, color: '255, 214, 0' }
 ];
 
@@ -338,7 +336,7 @@ const Projects = () => {
         <div className="projects container">
           <div className={`projects-header ${isVisible ? 'animate' : ''}`}>
             <h1 className="section-title" ref={titleRef}>
-              <FontAwesomeIcon icon={faSpaceShuttle} className="title-icon" /> Projects Universe
+              <FontAwesomeIcon icon={faSpaceShuttle} className="title-icon" /> Projects
             </h1>
             <div className="title-underline"></div>
           </div>
