@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Skills.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faJava, 
+  faDocker, 
+  faFigma, 
+  faJs, 
+  faHtml5, 
+  faCss3Alt, 
+  faReact, 
+  faAngular, 
+  faGitAlt
+} from '@fortawesome/free-brands-svg-icons';
+import { faDatabase, faServer } from '@fortawesome/free-solid-svg-icons';
 
 const Skills = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -8,14 +21,18 @@ const Skills = () => {
 
   // Application & Tool Knowledge
   const toolKnowledge = useMemo(() => [
-    { name: 'Angular', color: '#DD0031', rgb: '221, 0, 49' },
-    { name: 'JavaScript', color: '#F7DF1E', rgb: '247, 223, 30' },
-    { name: 'PostgreSQL', color: '#336791', rgb: '51, 103, 145' },
-    { name: 'Spring Boot', color: '#6DB33F', rgb: '109, 179, 63' },
-    { name: 'CSS', color: '#1572B6', rgb: '21, 114, 182' },
-    { name: 'HTML', color: '#E34F26', rgb: '227, 79, 38' },
-    { name: 'Git', color: '#F05032', rgb: '240, 80, 50' },
-    { name: 'React', color: '#61DAFB', rgb: '97, 218, 251' }
+    { name: 'Angular', color: '#DD0031', rgb: '221, 0, 49', icon: faAngular },
+    { name: 'JavaScript', color: '#F7DF1E', rgb: '247, 223, 30', icon: faJs },
+    { name: 'TypeScript', color: '#3178C6', rgb: '49, 120, 198', customIcon: 'TS' },
+    { name: 'Java', color: '#007396', rgb: '0, 115, 150', icon: faJava },
+    { name: 'PostgreSQL', color: '#336791', rgb: '51, 103, 145', icon: faDatabase },
+    { name: 'Spring Boot', color: '#6DB33F', rgb: '109, 179, 63', icon: faServer },
+    { name: 'CSS', color: '#1572B6', rgb: '21, 114, 182', icon: faCss3Alt },
+    { name: 'HTML', color: '#E34F26', rgb: '227, 79, 38', icon: faHtml5 },
+    { name: 'Git', color: '#F05032', rgb: '240, 80, 50', icon: faGitAlt },
+    { name: 'Docker', color: '#2496ED', rgb: '36, 150, 237', icon: faDocker },
+    { name: 'Figma', color: '#F24E1E', rgb: '242, 78, 30', icon: faFigma },
+    { name: 'React', color: '#61DAFB', rgb: '97, 218, 251', icon: faReact }
   ], []);
 
   // Technical Skills with initial and final assessment values
@@ -23,9 +40,11 @@ const Skills = () => {
     { name: 'Overall Rating', initial: 1.5, final: 3.8, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'Angular', initial: 1.2, final: 3.7, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'HTML & CSS', initial: 1.3, final: 4.5, color: '#00BFFF', rgb: '0, 191, 255' },
-    { name: 'Java Spring Boot', initial: 1.2, final: 3.6, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'Java Spring Boot', initial: 1.2, final: 3, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'TypeScript', initial: 1.4, final: 3.9, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'PostgreSQL', initial: 1.5, final: 4.3, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'Git', initial: 1.7, final: 3.5, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'Docker', initial: 1.3, final: 3.4, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'React', initial: 1.2, final: 3.3, color: '#00BFFF', rgb: '0, 191, 255' }
   ], []);
 
@@ -100,7 +119,19 @@ const Skills = () => {
                   animationDelay: `${index * 0.1}s`
                 }}
               >
-                <span>{tool.name}</span>
+                {tool.icon ? (
+                  <span className="tool-with-icon">
+                    <FontAwesomeIcon icon={tool.icon} className="tool-icon" />
+                    <span className="tool-name">{tool.name}</span>
+                  </span>
+                ) : tool.customIcon ? (
+                  <span className="tool-with-icon">
+                    <span className="custom-icon" style={{ backgroundColor: tool.color }}>{tool.customIcon}</span>
+                    <span className="tool-name">{tool.name}</span>
+                  </span>
+                ) : (
+                  <span>{tool.name}</span>
+                )}
               </div>
             ))}
           </div>

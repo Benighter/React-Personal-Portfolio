@@ -227,10 +227,11 @@
   margin: 0 auto;
   width: 100%;
   padding-top: 30px;
+  padding-bottom: 20px;
 }
 
 #skills .tool-item {
-  padding: 22px 35px;
+  padding: 20px 30px;
   background-color: rgba(17, 25, 39, 0.7);
   border-radius: 10px;
   border-left: none;
@@ -242,7 +243,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(50, 205, 50, 0.2);
-  width: 180px;
+  width: 200px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -276,16 +277,6 @@
   transition: transform 0.3s ease;
 }
 
-#skills .tool-item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--tool-rgb), 0.3);
-  border-color: rgba(var(--tool-rgb), 0.5);
-}
-
-#skills .tool-item:hover::after {
-  transform: scaleY(1);
-}
-
 #skills .tool-item span {
   font-size: 1.5rem;
   font-weight: 600;
@@ -295,9 +286,64 @@
   z-index: 1;
 }
 
-#skills .tool-item:hover span {
-  transform: translateX(10px);
+#skills .tool-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+  min-height: 40px;
+}
+
+/* Hide the ::after element for tool items when hovering */
+#skills .tool-item:hover::after {
+  display: none;
+}
+
+#skills .tool-icon {
+  font-size: 2.2rem;
   color: var(--tool-color);
+  min-width: 30px;
+  text-shadow: 0 0 10px rgba(var(--tool-rgb), 0.5);
+  transition: all 0.3s ease;
+}
+
+#skills .custom-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(var(--tool-rgb), 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Hover effects */
+#skills .tool-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--tool-rgb), 0.5);
+  border-color: rgba(var(--tool-rgb), 0.6);
+}
+
+#skills .tool-item:hover .tool-icon {
+  transform: scale(1.15);
+  color: var(--tool-color);
+  text-shadow: 0 0 15px rgba(var(--tool-rgb), 0.7);
+}
+
+#skills .tool-item:hover .custom-icon {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(var(--tool-rgb), 0.7);
+}
+
+#skills .tool-item:hover span:last-child {
+  color: var(--tool-color);
+  text-shadow: 0 0 10px rgba(var(--tool-rgb), 0.3);
 }
 
 /* Technical Skills Section */
@@ -983,4 +1029,100 @@
 
 #skills .legend-color.final {
   background-color: #00BFFF;
+}
+
+/* Add styles for the tools with icons */
+#skills .tool-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+#skills .tool-icon {
+  font-size: 2.2rem;
+  color: var(--tool-color);
+  min-width: 30px;
+  text-shadow: 0 0 10px rgba(var(--tool-rgb), 0.5);
+  transition: all 0.3s ease;
+}
+
+#skills .custom-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(var(--tool-rgb), 0.3);
+  transition: all 0.3s ease;
+}
+
+#skills .tool-item:hover .custom-icon {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(var(--tool-rgb), 0.5);
+  color: white;
+}
+
+#skills .tool-item:hover span {
+  transform: translateX(0);
+  color: var(--tool-color);
+}
+
+#skills .tool-item:hover .tool-icon {
+  transform: scale(1.1);
+  color: var(--tool-color);
+}
+
+#skills .tool-item:hover span {
+  transform: translateX(0);
+  color: var(--tool-color);
+}
+
+#skills .tool-item span.tool-with-icon span {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments for tool knowledge section */
+@media only screen and (max-width: 768px) {
+  #skills .tool-knowledge-container {
+    gap: 15px;
+  }
+  
+  #skills .tool-item {
+    width: 160px;
+    padding: 18px 20px;
+  }
+  
+  #skills .tool-with-icon {
+    gap: 10px;
+  }
+  
+  #skills .tool-icon {
+    font-size: 2rem;
+  }
+  
+  #skills .custom-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 1.2rem;
+  }
+}
+
+#skills .tool-name {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+#skills .tool-item:hover .tool-name {
+  color: var(--tool-color);
+  text-shadow: 0 0 10px rgba(var(--tool-rgb), 0.3);
 } 
