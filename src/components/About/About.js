@@ -126,7 +126,7 @@ const About = () => {
             </div>
             <div className="about-buttons">
               <a href="/Resume/My Resume.pdf" className="resume-btn" target="_blank" rel="noopener noreferrer">
-                Download Resume <FontAwesomeIcon icon={faDownload} />
+                Download CV <FontAwesomeIcon icon={faDownload} />
               </a>
               <button onClick={openModal} className="hire-me-btn">
                 Hire Me <FontAwesomeIcon icon={faEnvelope} />

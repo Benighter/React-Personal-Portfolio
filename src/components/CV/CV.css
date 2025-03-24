@@ -1,0 +1,37 @@
+/* CV Component Styles */
+
+/* Print styles */
+@media print {
+  body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .print-mode {
+    box-shadow: none !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .bg-gray-50 {
+    background-color: white !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+    break-inside: avoid !important;
+  }
+  
+  button {
+    display: none !important;
+  }
+  
+  .fixed {
+    display: none !important;
+  }
+}
+
+/* Make sure the CV container has proper margins */
+#cv-container {
+  margin-bottom: 5rem;
+} 

@@ -22,7 +22,7 @@
 
 .modal-container {
   width: 90%;
-  max-width: 550px;
+  max-width: 650px;
   border-radius: 15px;
   overflow: hidden;
   transform: translateY(20px);
@@ -67,7 +67,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px 30px 15px;
+  padding: 30px 35px 20px;
   position: relative;
 }
 
@@ -79,7 +79,7 @@
 
 .modal-header h2 {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
@@ -137,24 +137,24 @@
 }
 
 .modal-body {
-  padding: 15px 30px 30px;
+  padding: 20px 35px 35px;
 }
 
 .modal-intro {
   color: #a9b3c1;
-  font-size: 1.1rem;
-  margin-bottom: 25px;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
   line-height: 1.6;
   text-align: center;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   display: flex;
   align-items: flex-start;
   position: relative;
   transition: all 0.3s ease;
-  border-radius: 8px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -164,12 +164,12 @@
 }
 
 .input-icon {
-  padding: 30px 15px 10px;
+  padding: 35px 18px 12px;
   color: rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   transition: all 0.3s ease;
 }
 
@@ -192,9 +192,9 @@
   margin-bottom: 0;
   font-weight: 500;
   color: #a9b3c1;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   position: absolute;
-  top: 10px;
+  top: 12px;
   left: 0;
   transition: all 0.3s ease;
 }
@@ -206,10 +206,10 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 30px 20px 10px 0;
+  padding: 35px 20px 12px 0;
   background: transparent;
   border: none;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: white;
   border-radius: 0;
   transition: all 0.3s ease;
@@ -236,13 +236,13 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 15px;
-  margin-top: 30px;
+  padding: 18px;
+  margin-top: 35px;
   background: linear-gradient(45deg, #32CD32, #00BFFF);
   color: white;
   border: none;
   border-radius: 30px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -281,12 +281,12 @@
 }
 
 .form-result {
-  margin-top: 20px;
-  padding: 12px;
-  border-radius: 8px;
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 10px;
   text-align: center;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   animation: fadeInUp 0.5s forwards;
 }
 
@@ -319,33 +319,33 @@
   }
   
   .modal-header {
-    padding: 20px 20px 10px;
+    padding: 25px 25px 15px;
   }
   
   .modal-header h2 {
-    font-size: 1.8rem;
+    font-size: 2.1rem;
   }
   
   .modal-body {
-    padding: 10px 20px 25px;
+    padding: 15px 25px 30px;
   }
   
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   
   .input-icon {
-    padding: 25px 10px 10px;
+    padding: 30px 12px 12px;
   }
   
   .form-group input, 
   .form-group textarea {
-    padding: 25px 15px 10px 0;
-    font-size: 1rem;
+    padding: 30px 15px 12px 0;
+    font-size: 1.2rem;
   }
   
   .submit-button {
-    padding: 12px;
-    font-size: 1.1rem;
+    padding: 15px;
+    font-size: 1.3rem;
   }
 } 
