@@ -108,22 +108,7 @@ const About = () => {
             <h2 className="job-title">Junior Fullstack Developer</h2>
             <div className="about-text-container">
               <p className="about-text">
-                As a Junior fullstack Developer, I thrive on transforming innovative ideas into powerful, scalable applications. 
-                My expertise spans the entire development spectrum - from crafting intuitive user interfaces with React and 
-                Angular to architecting robust backend systems using Spring Boot and Node.js. I take pride in writing clean, 
-                maintainable code that stands the test of time and scale.
-              </p>
-              <p className="about-text">
-                What sets me apart is my unique blend of technical prowess and creative vision. With advanced proficiency 
-                in PostgreSQL database design, RESTful API development, and modern JavaScript frameworks, I build seamless 
-                digital experiences that users love. My commitment to responsive design and performance optimization ensures 
-                that every application I create delivers exceptional user experience across all devices.
-              </p>
-              <p className="about-text">
-                I'm not just a developer; I'm a problem solver and innovator. Whether it's optimizing complex database queries, 
-                implementing secure authentication systems, or creating intuitive user interfaces, I approach each challenge 
-                with analytical thinking and creative solutions. My experience with Git version control and agile methodologies 
-                makes me an effective team player who can adapt quickly to changing project requirements.
+              I'm a Junior Fullstack Developer with a strong focus on frontend work. I love using CSS to make interfaces look cool, with fun animations that enhance user experiences. While I build backends using Node.js and Spring Boot, my true passion is creating clean, easy-to-use frontends with React and Angular. I also work with PostgreSQL and RESTful APIs, ensuring my apps perform well on all devices and within agile teams.
               </p>
             </div>
             <br />

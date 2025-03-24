@@ -99,10 +99,10 @@ const Header = () => {
             </div>
             <ul className={hamburgerActive ? 'active' : ''}>
               <li><a href="#hero" data-after="Home" onClick={handleNavClick} className={activeSection === 'hero' ? 'active' : ''}>Home</a></li>
+              <li><a href="#about" data-after="About" onClick={handleNavClick} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
               <li><a href="#services" data-after="Service" onClick={handleNavClick} className={activeSection === 'services' ? 'active' : ''}>Services</a></li>
               <li><a href="#projects" data-after="Projects" onClick={handleNavClick} className={activeSection === 'projects' ? 'active' : ''}>Projects</a></li>
               <li><a href="#skills" data-after="Skills" onClick={handleNavClick} className={activeSection === 'skills' ? 'active' : ''}>Skills</a></li>
-              <li><a href="#about" data-after="About" onClick={handleNavClick} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
               <li><a href="#contact" data-after="Contact" onClick={handleNavClick} className={activeSection === 'contact' ? 'active' : ''}>Contact</a></li>
             </ul>
           </div>

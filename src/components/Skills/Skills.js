@@ -14,7 +14,8 @@ const Skills = () => {
     { name: 'Spring Boot', color: '#6DB33F', rgb: '109, 179, 63' },
     { name: 'CSS', color: '#1572B6', rgb: '21, 114, 182' },
     { name: 'HTML', color: '#E34F26', rgb: '227, 79, 38' },
-    { name: 'Git', color: '#F05032', rgb: '240, 80, 50' }
+    { name: 'Git', color: '#F05032', rgb: '240, 80, 50' },
+    { name: 'React', color: '#61DAFB', rgb: '97, 218, 251' }
   ], []);
 
   // Technical Skills with initial and final assessment values
@@ -24,7 +25,8 @@ const Skills = () => {
     { name: 'HTML & CSS', initial: 1.3, final: 4.5, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'Java Spring Boot', initial: 1.2, final: 3.6, color: '#00BFFF', rgb: '0, 191, 255' },
     { name: 'PostgreSQL', initial: 1.5, final: 4.3, color: '#00BFFF', rgb: '0, 191, 255' },
-    { name: 'Git', initial: 1.7, final: 3.5, color: '#00BFFF', rgb: '0, 191, 255' }
+    { name: 'Git', initial: 1.7, final: 3.5, color: '#00BFFF', rgb: '0, 191, 255' },
+    { name: 'React', initial: 1.2, final: 3.3, color: '#00BFFF', rgb: '0, 191, 255' }
   ], []);
 
   // Soft Skills

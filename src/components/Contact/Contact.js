@@ -6,10 +6,7 @@ import {
   faMapMarkerAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { 
-  faGithub, 
-  faLinkedinIn, 
-  faTwitter, 
-  faInstagram 
+
 } from '@fortawesome/free-brands-svg-icons';
 import './Contact.css';
 
@@ -20,18 +17,19 @@ const Contact = () => {
 
 
   useEffect(() => {
+    const currentRef = contactRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(contactRef.current);
+          observer.unobserve(currentRef);
         }
       },
       { threshold: 0.1 }
     );
 
-    if (contactRef.current) {
-      observer.observe(contactRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     // Add letter animation to title
@@ -50,8 +48,8 @@ const Contact = () => {
     }
 
     return () => {
-      if (contactRef.current) {
-        observer.unobserve(contactRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [isVisible]);

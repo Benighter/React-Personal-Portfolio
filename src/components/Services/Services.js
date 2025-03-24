@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptopCode, faGlobe, faChalkboardTeacher, faCubes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faLaptopCode, faGlobe, faChalkboardTeacher, faCubes} from '@fortawesome/free-solid-svg-icons';
 import './Services.css';
 
 const Services = () => {
