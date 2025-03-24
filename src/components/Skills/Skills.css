@@ -131,7 +131,7 @@
   margin: 0 auto 50px;
   font-size: 1.4rem;
   line-height: 1.6;
-  color: #a9b3c1;
+  color: #ffffff;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease-out 0.2s;
@@ -806,7 +806,7 @@
 #skills .review-content p {
   font-size: 1.6rem;
   line-height: 1.8;
-  color: #a9b3c1;
+  color: #fff;
   font-style: italic;
   position: relative;
   z-index: 2;
@@ -951,7 +951,7 @@
 
 #skills .legend-item span {
   font-size: 1.1rem;
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   font-weight: 500;
 }
@@ -1125,4 +1125,1347 @@
 #skills .tool-item:hover .tool-name {
   color: var(--tool-color);
   text-shadow: 0 0 10px rgba(var(--tool-rgb), 0.3);
+}
+
+/* View Toggle */
+.view-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.view-toggle-btn {
+  padding: 12px 20px;
+  background-color: rgba(17, 25, 39, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+
+.view-toggle-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+}
+
+.view-toggle-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.view-toggle-btn.active {
+  background-color: rgba(0, 191, 255, 0.2);
+  color: #fff;
+  border-color: rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+  font-weight: 600;
+}
+
+/* Technical Skills List View */
+.technical-skills-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 30px;
+}
+
+/* Technical Skill Item (Enhanced) */
+.technical-skill-item {
+  background-color: rgba(17, 25, 39, 0.7);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+  border: 1px solid rgba(var(--skill-rgb), 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.technical-skill-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--skill-color), transparent);
+}
+
+.technical-skill-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--skill-rgb), 0.3);
+  border-color: rgba(var(--skill-rgb), 0.5);
+}
+
+.technical-skill-item.expanded {
+  background-color: rgba(20, 30, 48, 0.85);
+  border-color: rgba(var(--skill-rgb), 0.8);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--skill-rgb), 0.4);
+}
+
+.skill-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.skill-expand-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.skill-expand-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(var(--skill-rgb), 0.2);
+}
+
+.expanded .skill-expand-btn {
+  color: var(--skill-color);
+  background-color: rgba(var(--skill-rgb), 0.2);
+}
+
+.skill-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.expanded .skill-name {
+  color: var(--skill-color);
+  text-shadow: 0 0 10px rgba(var(--skill-rgb), 0.5);
+}
+
+.skill-description {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  animation: fadeIn 0.5s forwards;
+}
+
+.skill-description p {
+  color: #ffffff;
+}
+
+.skill-growth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.growth-label {
+  color: #ffffff;
+}
+
+.growth-value {
+  font-weight: 700;
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.1);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* Radar Chart View */
+.technical-skills-radar-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding: 20px 0;
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+@media (min-width: 992px) {
+  .technical-skills-radar-container {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+.radar-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  animation: fadeIn 0.8s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-chart {
+  width: 100%;
+  height: 100%;
+  max-height: 450px;
+  position: relative;
+}
+
+.radar-chart canvas {
+  filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.3));
+}
+
+/* Skill Details for Radar View - Fixed and Improved */
+.radar-skill-detail {
+  background: rgba(17, 25, 39, 0.95);
+  border-radius: 16px;
+  padding: 35px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(0, 191, 255, 0.15);
+  animation: fadeIn 0.8s ease-out;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient background without affecting readability */
+.radar-skill-detail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(54, 162, 235, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 90% 90%, rgba(255, 99, 132, 0.05) 0%, transparent 60%);
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* Tech pattern decoration with reduced opacity */
+.radar-skill-detail::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 120px;
+  height: 120px;
+  background-image: 
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.01) 4px, transparent 4px);
+  background-size: 15px 15px, 40px 40px;
+  background-position: 0 0, 10px 10px;
+  opacity: 0.4;
+  z-index: 0;
+  transform: rotate(45deg);
+}
+
+.radar-skill-card {
+  position: relative;
+  animation: fadeIn 0.5s ease-out;
+  z-index: 1;
+  background: rgba(17, 25, 39, 0.6);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(var(--skill-rgb, 0, 191, 255), 0.15);
+  transform: translateZ(0);
+  transition: all 0.3s ease;
+}
+
+/* Improved card hover effect */
+.radar-skill-card:hover {
+  border-color: rgba(var(--skill-rgb, 0, 191, 255), 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 15px rgba(var(--skill-rgb, 0, 191, 255), 0.2);
+}
+
+.radar-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: calc(100% + 40px);
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.radar-nav-btn {
+  background-color: rgba(17, 25, 39, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 1.8rem;
+  pointer-events: auto;
+  opacity: 0.8;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.radar-nav-btn:hover {
+  background-color: rgba(var(--skill-rgb, 0, 191, 255), 0.2);
+  color: #fff;
+  opacity: 1;
+  transform: scale(1.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25), 0 0 10px rgba(var(--skill-rgb, 0, 191, 255), 0.3);
+}
+
+.radar-nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* Fixed title styles - removed blurring effects */
+.radar-skill-card h3 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  text-align: center;
+  color: var(--skill-color);
+  text-shadow: 0 0 10px rgba(var(--skill-rgb, 0, 191, 255), 0.4);
+  position: relative;
+  padding-bottom: 8px;
+}
+
+/* Add subtle underline to skill title */
+.radar-skill-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--skill-color), transparent);
+  border-radius: 2px;
+}
+
+.radar-skill-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 30px;
+  background: rgba(17, 25, 40, 0.3);
+  padding: 22px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+}
+
+.meter-section-title {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 18px;
+  text-align: left;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.meter-section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, rgba(54, 162, 235, 0.8), rgba(54, 162, 235, 0.3));
+  border-radius: 3px;
+}
+
+.radar-skill-meter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.radar-skill-meter span:first-child {
+  width: 60px;
+  text-align: right;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.radar-skill-meter span:last-child {
+  width: 50px;
+  text-align: left;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.radar-skill-meter:nth-child(2) span:last-child {
+  color: #36a2eb;
+  text-shadow: 0 0 10px rgba(54, 162, 235, 0.5);
+  animation: pulse-text 2s infinite alternate;
+}
+
+@keyframes pulse-text {
+  0% {
+    text-shadow: 0 0 5px rgba(54, 162, 235, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(54, 162, 235, 0.7);
+  }
+}
+
+.meter-bar {
+  flex-grow: 1;
+  height: 6px;
+  background-color: rgba(15, 23, 42, 0.7);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+/* Clean meter fills to match screenshot */
+.meter-fill {
+  height: 100%;
+  border-radius: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  transition: width 1s ease-out;
+}
+
+.meter-fill.initial {
+  background: linear-gradient(90deg, rgba(255, 99, 132, 0.7), rgba(255, 99, 132, 0.9));
+  box-shadow: 0 0 6px rgba(255, 99, 132, 0.3);
+}
+
+.meter-fill.final {
+  background: linear-gradient(90deg, rgba(54, 162, 235, 0.7), rgba(54, 162, 235, 0.9));
+  box-shadow: 0 0 6px rgba(54, 162, 235, 0.3);
+}
+
+/* Scale markers */
+.meter-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, 
+    transparent, 
+    transparent 19%, 
+    rgba(255, 255, 255, 0.1) 19%, 
+    rgba(255, 255, 255, 0.1) 20%
+  );
+  z-index: 1;
+}
+
+/* Animation for radar skill meter bars */
+@keyframes growBarWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--final-width, 0%);
+  }
+}
+
+.radar-skill-card-update .meter-fill.animated {
+  animation: growBarWidth 1s ease-out forwards;
+  transition: none;
+}
+
+.radar-skill-card-update .meter-fill.initial.animated {
+  animation-delay: 0.1s;
+}
+
+.radar-skill-card-update .meter-fill.final.animated {
+  animation-delay: 0.3s;
+}
+
+/* Simple scale markers without being too distracting */
+.meter-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, 
+    transparent, 
+    transparent 19.5%, 
+    rgba(255, 255, 255, 0.05) 19.5%, 
+    rgba(255, 255, 255, 0.05) 20%
+  );
+  opacity: 0.7;
+}
+
+.radar-skill-description {
+  color: #ffffff;
+  font-size: 1.45rem;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px 20px;
+  border-radius: 10px;
+  border-left: 3px solid var(--skill-color);
+  font-style: italic;
+  position: relative;
+}
+
+/* Added a collapse/expand button for radar skill detail */
+.radar-skill-card .skill-collapse-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  z-index: 5;
+}
+
+.radar-skill-card .skill-collapse-btn:hover {
+  background: rgba(var(--skill-rgb, 0, 191, 255), 0.2);
+  color: #fff;
+}
+
+/* Subtle animation for description quote mark */
+.radar-skill-description::before {
+  content: '"';
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 3rem;
+  line-height: 1;
+  color: rgba(var(--skill-rgb, 0, 191, 255), 0.2);
+  font-family: Georgia, serif;
+}
+
+.radar-skill-growth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.radar-skill-growth span:first-child {
+  font-weight: 500;
+}
+
+.growth-number {
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.growth-number::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  animation: shimmer-growth 3s infinite;
+}
+
+@keyframes shimmer-growth {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Animation for collapsed/expanded state */
+.radar-skill-card .radar-skill-meters,
+.radar-skill-card .radar-skill-description,
+.radar-skill-card .radar-skill-growth {
+  max-height: 300px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.86, 0, 0.07, 1), 
+              opacity 0.5s ease,
+              margin 0.5s ease,
+              padding 0.5s ease;
+}
+
+.radar-skill-card.collapsed .radar-skill-meters,
+.radar-skill-card.collapsed .radar-skill-description,
+.radar-skill-card.collapsed .radar-skill-growth {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.radar-skill-card {
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.radar-skill-card.collapsed {
+  padding: 15px 25px;
+  transform: translateY(0);
+}
+
+.radar-skill-card.collapsed h3 {
+  margin-bottom: 0;
+  transition: margin-bottom 0.5s ease;
+}
+
+.radar-skill-card.collapsed h3::after {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Radar pulse animation - restore this important animation */
+@keyframes radar-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--btn-rgb), 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--btn-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--btn-rgb), 0);
+  }
+}
+
+/* Re-add the radar-select-btn animation properties */
+.radar-select-btn {
+  --btn-rgb: var(--skill-rgb, 0, 191, 255);
+  animation: radar-pulse 2s infinite;
+  animation-delay: calc(var(--index, 0) * 0.3s);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* View Transitions - restore these for the toggle functionality */
+.technical-skills-list-container,
+.technical-skills-radar-container {
+  position: relative;
+  animation: fadeScale 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform-origin: center top;
+}
+
+@keyframes fadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Toggle button animation - restore this for the toggle button ripple effect */
+.view-toggle-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.view-toggle-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 191, 255, 0.6);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.view-toggle-btn:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0) translate(-50%, -50%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Enhanced animations for skill items - restore this for the staggered animation */
+.technical-skill-item {
+  animation: none; /* Override default animation */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.technical-skills-list-container .technical-skill-item {
+  animation: staggeredFadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes staggeredFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animations for list items - restore this sequence */
+.technical-skills-list-container .technical-skill-item:nth-child(1) { animation-delay: 0.1s; }
+.technical-skills-list-container .technical-skill-item:nth-child(2) { animation-delay: 0.15s; }
+.technical-skills-list-container .technical-skill-item:nth-child(3) { animation-delay: 0.2s; }
+.technical-skills-list-container .technical-skill-item:nth-child(4) { animation-delay: 0.25s; }
+.technical-skills-list-container .technical-skill-item:nth-child(5) { animation-delay: 0.3s; }
+.technical-skills-list-container .technical-skill-item:nth-child(6) { animation-delay: 0.35s; }
+.technical-skills-list-container .technical-skill-item:nth-child(7) { animation-delay: 0.4s; }
+.technical-skills-list-container .technical-skill-item:nth-child(8) { animation-delay: 0.45s; }
+.technical-skills-list-container .technical-skill-item:nth-child(9) { animation-delay: 0.5s; }
+
+/* Enhanced Radar View Animations - restore the radar ping effect */
+.radar-chart {
+  position: relative;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.radar-chart::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(0, 191, 255, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0;
+  animation: radarPing 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radarPing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  70% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(6);
+    opacity: 0;
+  }
+}
+
+/* Additional glow effect for skill card to make it more visually interesting */
+.radar-skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(var(--skill-rgb, 0, 191, 255), 0.1) 0%, transparent 70%);
+  opacity: 0;
+  animation: cardGlow 3s ease-in-out infinite alternate;
+  z-index: -1;
+  border-radius: 12px;
+}
+
+@keyframes cardGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Animate the meter bars - restore this animation */
+.radar-skill-meter .meter-fill {
+  width: 0% !important;
+  animation: growBar 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes growBar {
+  to {
+    width: var(--final-width, 0%) !important;
+  }
+}
+
+.radar-skill-meter:nth-child(1) .meter-fill { animation-delay: 0.2s; }
+.radar-skill-meter:nth-child(2) .meter-fill { animation-delay: 0.4s; }
+
+/* Original media query for toggle container in mobile view */
+@media (max-width: 768px) {
+  .view-toggle-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .view-toggle-btn {
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+  }
+  
+  .radar-chart-wrapper {
+    height: 350px;
+  }
+  
+  .technical-skills-radar-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Radar Instructions Section - Fixed */
+.radar-instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  min-height: 350px;
+  animation: fadeIn 0.5s ease-out;
+  background: rgba(17, 25, 39, 0.85);
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.radar-instructions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.01) 4px, transparent 4px);
+  background-size: 15px 15px, 40px 40px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.radar-instructions p {
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin-bottom: 40px;
+  max-width: 400px;
+  line-height: 1.6;
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+}
+
+.radar-instructions p::after {
+  content: '↓';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: rgba(0, 191, 255, 0.6);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+.radar-quick-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.radar-select-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  --btn-rgb: var(--skill-rgb, 0, 191, 255);
+  animation: radar-pulse 2s infinite;
+  animation-delay: calc(var(--index, 0) * 0.3s);
+}
+
+.radar-select-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.radar-select-btn:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--btn-rgb), 0.4);
+}
+
+.radar-select-btn:hover::before {
+  opacity: 1;
+}
+
+.radar-select-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+@keyframes radar-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--btn-rgb), 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--btn-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--btn-rgb), 0);
+  }
+}
+
+/* Enhanced media queries for better responsiveness */
+@media (max-width: 1200px) {
+  .radar-skill-card h3 {
+    font-size: 2.2rem;
+  }
+  
+  .radar-skill-description {
+    font-size: 1.35rem;
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .radar-skill-detail {
+    padding: 25px;
+  }
+  
+  .radar-skill-card {
+    padding: 20px;
+  }
+  
+  .radar-nav-buttons {
+    width: calc(100% + 30px);
+    left: -15px;
+  }
+  
+  .radar-nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .radar-skill-detail {
+    padding: 20px;
+    min-height: 320px;
+  }
+  
+  .radar-skill-card {
+    padding: 15px;
+  }
+  
+  .radar-skill-card h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .radar-skill-meters {
+    gap: 15px;
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .radar-skill-meter {
+    font-size: 1.3rem;
+  }
+  
+  .radar-skill-description {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  
+  .radar-select-btn {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .radar-skill-detail {
+    padding: 15px;
+  }
+  
+  .radar-skill-card {
+    padding: 12px;
+  }
+  
+  .radar-skill-card h3 {
+    font-size: 1.8rem;
+  }
+  
+  .radar-skill-meter span:first-child {
+    width: 55px;
+    font-size: 1.2rem;
+  }
+  
+  .radar-skill-meter span:last-child {
+    width: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .radar-skill-description {
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+  
+  .radar-skill-growth {
+    font-size: 1.3rem;
+    padding: 10px 15px;
+  }
+  
+  .growth-number {
+    padding: 5px 12px;
+  }
+  
+  .radar-nav-buttons {
+    width: calc(100% + 20px);
+    left: -10px;
+  }
+  
+  .radar-nav-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 1.4rem;
+  }
+  
+  .radar-instructions {
+    padding: 20px 15px;
+  }
+  
+  .radar-instructions p {
+    font-size: 1.3rem;
+    max-width: 250px;
+  }
+  
+  .radar-select-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
 } 
+
+.radar-back-btn {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  z-index: 10;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.radar-back-btn:hover {
+  background: rgba(0, 191, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+/* Ensure the instructions and quick-select buttons display properly */
+.radar-instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  animation: fadeIn 0.5s ease-out;
+  background: rgba(17, 25, 39, 0.8);
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.radar-instructions p {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  max-width: 300px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.radar-instructions p::after {
+  content: '↓';
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: rgba(0, 191, 255, 0.6);
+  animation: bounce 2s infinite;
+}
+
+.radar-quick-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Make sure meter animations work properly */
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0 !important;
+  transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 8px rgba(var(--meter-rgb, 255, 99, 132), 0.6);
+  animation: growBar 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.radar-skill-meter:nth-child(1) .meter-fill { animation-delay: 0.2s; }
+.radar-skill-meter:nth-child(2) .meter-fill { animation-delay: 0.4s; }
+
+.meter-section-title {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+  opacity: 0.9;
+  position: relative;
+}
+
+.meter-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Add a pulsing highlight to the current value */
+.radar-skill-meter:nth-child(2) span:last-child {
+  position: relative;
+  animation: pulse-text 2s infinite;
+}
+
+@keyframes pulse-text {
+  0% {
+    text-shadow: 0 0 5px rgba(54, 162, 235, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(54, 162, 235, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(54, 162, 235, 0.2);
+  }
+}
+
+/* Ensure animations restart */
+.radar-skill-card-update .meter-fill {
+  animation: none;
+  width: 0;
+}
+
+.radar-skill-card-update .meter-fill.animated {
+  animation: growBarWidth 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.radar-skill-card-update .meter-fill.initial.animated {
+  animation-delay: 0.2s;
+}
+
+.radar-skill-card-update .meter-fill.final.animated {
+  animation-delay: 0.6s;
+}
+
+/* Add some visual cues */
+.meter-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  z-index: 1;
+}
+
+/* Add scale markings */
+.meter-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg, 
+    transparent, 
+    transparent 19%, 
+    rgba(255, 255, 255, 0.1) 19%, 
+    rgba(255, 255, 255, 0.1) 20%
+  );
+  opacity: 0.7;
+  z-index: 1;
+}
