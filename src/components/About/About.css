@@ -320,57 +320,19 @@
   transform: translateX(5px);
 }
 
-#about .resume-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 15px 30px;
-  background: linear-gradient(45deg, #32CD32, #00BFFF);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  font-size: 1.6rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(50, 205, 50, 0.3);
+.about-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
-#about .resume-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-#about .resume-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(50, 205, 50, 0.4);
-}
-
-#about .resume-btn:hover::before {
-  left: 100%;
-}
-
-#about .resume-btn svg {
-  margin-left: 12px;
-  transition: transform 0.3s ease;
-}
-
-#about .resume-btn:hover svg {
-  transform: translateY(-5px);
-}
-
+#about .resume-btn,
 #about .hire-me-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 15px 30px;
-  background: linear-gradient(45deg, #00BFFF, #3498db);
   color: #fff;
   border: none;
   border-radius: 30px;
@@ -380,9 +342,21 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  min-width: 220px;
+  text-align: center;
+}
+
+#about .resume-btn {
+  background: linear-gradient(45deg, #32CD32, #00BFFF);
+  box-shadow: 0 5px 15px rgba(50, 205, 50, 0.3);
+}
+
+#about .hire-me-btn {
+  background: linear-gradient(45deg, #00BFFF, #3498db);
   box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
 }
 
+#about .resume-btn::before,
 #about .hire-me-btn::before {
   content: '';
   position: absolute;
@@ -394,18 +368,32 @@
   transition: 0.5s;
 }
 
+#about .resume-btn:hover,
 #about .hire-me-btn:hover {
   transform: translateY(-3px);
+}
+
+#about .resume-btn:hover {
+  box-shadow: 0 8px 25px rgba(50, 205, 50, 0.4);
+}
+
+#about .hire-me-btn:hover {
   box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
 }
 
+#about .resume-btn:hover::before,
 #about .hire-me-btn:hover::before {
   left: 100%;
 }
 
+#about .resume-btn svg,
 #about .hire-me-btn svg {
   margin-left: 12px;
   transition: transform 0.3s ease;
+}
+
+#about .resume-btn:hover svg {
+  transform: translateY(-5px);
 }
 
 #about .hire-me-btn:hover svg {
@@ -743,11 +731,4 @@
 
 .progress {
   animation: progressFill 1.5s ease-out forwards;
-}
-
-.about-buttons {
-  display: flex;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
 } 
