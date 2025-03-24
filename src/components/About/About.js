@@ -3,8 +3,10 @@ import './About.css';
 import blenderImage from '../../assets/img/img-2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faDownload
+  faDownload,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
+import ContactModal from '../ContactModal/ContactModal';
 import './About.css';
 
 // Move debounce outside component
@@ -23,6 +25,7 @@ const debounce = (func, delay) => {
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
   const imgRef = useRef(null);
@@ -46,6 +49,16 @@ const About = () => {
     debounce(handleMouseLeave, 50),
     [handleMouseLeave]
   );
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = ''; // Restore scrolling
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -111,15 +124,19 @@ const About = () => {
               I'm a Junior Fullstack Developer with a strong focus on frontend work. I love using CSS to make interfaces look cool, with fun animations that enhance user experiences. While I build backends using Node.js and Spring Boot, my true passion is creating clean, easy-to-use frontends with React and Angular. I also work with PostgreSQL and RESTful APIs, ensuring my apps perform well on all devices and within agile teams.
               </p>
             </div>
-            <br />
-            <br />
-            <br />
-            <a href="/Resume/My Resume.pdf" className="resume-btn" target="_blank" rel="noopener noreferrer">
-              Download Resume <FontAwesomeIcon icon={faDownload} />
-            </a>
+            <div className="about-buttons">
+              <a href="/Resume/My Resume.pdf" className="resume-btn" target="_blank" rel="noopener noreferrer">
+                Download Resume <FontAwesomeIcon icon={faDownload} />
+              </a>
+              <button onClick={openModal} className="hire-me-btn">
+                Hire Me <FontAwesomeIcon icon={faEnvelope} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      
+      <ContactModal isOpen={isModalOpen} onClose={closeModal} />
     </section>
   );
 };
