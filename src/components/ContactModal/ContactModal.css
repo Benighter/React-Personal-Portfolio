@@ -65,7 +65,7 @@
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 25px 30px 15px;
   position: relative;
@@ -73,6 +73,8 @@
 
 .modal-title {
   position: relative;
+  text-align: center;
+  width: 100%;
 }
 
 .modal-header h2 {
@@ -111,6 +113,9 @@
 }
 
 .close-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
   background: none;
   border: none;
   font-size: 1.6rem;

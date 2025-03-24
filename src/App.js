@@ -16,11 +16,11 @@ function App() {
       <Header />
       <Hero />
       <About />
-      <Footer />
       <Services />
       <Projects />
       <Skills />
       <Contact />
+      <Footer />
       <GoUpButton />
     </div>
   );
