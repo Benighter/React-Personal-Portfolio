@@ -11,7 +11,8 @@ import {
   faAtom,
   faSatellite,
   faMeteor,
-  faSpaceShuttle
+  faSpaceShuttle,
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 import './Projects.css';
 
@@ -22,10 +23,13 @@ import triviaGame from '../../assets/img/Trivia Game.png';
 import movieSite from '../../assets/img/Movie Site.png';
 import clock from '../../assets/img/Clock.png';
 import colorSwitch from '../../assets/img/colorSwitch.png';
+import savoryExplorer from '../../assets/img/SavoryExplorer.png';
+import wordWise from '../../assets/img/wordWise.png';
 
 // Define categories with icons and colors
 const categories = [
   { id: 'all', name: 'All Projects', icon: faAtom, color: '94, 114, 228' },
+  { id: 'featured', name: 'Featured', icon: faStar, color: '236, 64, 122' },
   { id: 'web', name: 'Web Apps', icon: faGlobe, color: '45, 206, 137' },
   { id: 'game', name: 'Games', icon: faGamepad, color: '251, 99, 64' },
   { id: 'ui', name: 'UI/UX', icon: faPalette, color: '255, 214, 0' }
@@ -68,9 +72,10 @@ const ProjectCard = ({ project, index, moveCard, isFocused, onClick }) => {
   return (
     <div 
       ref={ref}
-      className={`project-card ${isFocused ? 'focused' : ''} ${isDragging ? 'dragging' : ''}`}
+      className={`project-card ${isFocused ? 'focused' : ''} ${isDragging ? 'dragging' : ''} ${project.featured ? 'featured' : ''}`}
       style={{ 
         '--project-color': project.color,
+        '--project-color-rgb': project.colorRgb,
         '--orbit-distance': `${150 + (index % 3) * 100}px`,
         '--orbit-speed': `${10 + index % 5}s`,
         '--orbit-delay': `-${index * 2}s`,
@@ -80,6 +85,11 @@ const ProjectCard = ({ project, index, moveCard, isFocused, onClick }) => {
       onClick={onClick}
     >
       <div className="content-wrapper">
+        {project.featured && (
+          <div className="featured-badge" style={{ backgroundColor: project.color }}>
+            <FontAwesomeIcon icon={faStar} /> Featured
+          </div>
+        )}
         <div className="project-img">
           <img src={project.image} alt={project.title} />
           <div className="project-overlay">
@@ -133,11 +143,32 @@ const Projects = () => {
   const animationFrameRef = useRef(null);
   const [projectsList, setProjectsList] = useState([
     {
+      title: 'SavoryExplorer',
+      description: 'SavoryExplorer is a modern food recipe application that allows users to discover and explore recipes from around the world. Built with Next.js, TypeScript, and Tailwind CSS, it offers a responsive and intuitive user experience across all devices.',
+      image: savoryExplorer,
+      link: 'https://savory-explorer.vercel.app/',
+      color: '#38a169',
+      colorRgb: '56, 161, 105',
+      categories: ['web', 'ui'],
+      featured: true
+    },
+    {
+      title: 'WordWise',
+      description: 'WordWise is a comprehensive dictionary application that allows users to look up word definitions, hear pronunciations, and organize their vocabulary. It features user authentication, search history tracking, favorites system, word categories, and a Word of the Day feature.',
+      image: wordWise,
+      link: 'https://word-wise-tau.vercel.app/',
+      color: '#4299e1',
+      colorRgb: '66, 153, 225',
+      categories: ['web', 'ui'],
+      featured: true
+    },
+    {
       title: 'Color Switch Clone',
       description: 'An addictive arcade game where players navigate a ball through color-coded obstacles.',
       image: colorSwitch,
       link: 'https://color-switch-clone.vercel.app/',
       color: '#ff6b6b',
+      colorRgb: '255, 107, 107',
       categories: ['game', 'ui']
     },
     {
@@ -146,6 +177,7 @@ const Projects = () => {
       image: weatherNexus,
       link: 'https://benighter.github.io/Weather-App/',
       color: '#5e72e4',
+      colorRgb: '94, 114, 228',
       categories: ['web', 'ui']
     },
     {
@@ -154,6 +186,7 @@ const Projects = () => {
       image: neolex,
       link: 'https://benighter.github.io/Dictionary/',
       color: '#11cdef',
+      colorRgb: '17, 205, 239',
       categories: ['web']
     },
     {
@@ -162,6 +195,7 @@ const Projects = () => {
       image: triviaGame,
       link: 'https://benighter.itch.io/trivia-master',
       color: '#2dce89',
+      colorRgb: '45, 206, 137',
       categories: ['game']
     },
     {
@@ -170,6 +204,7 @@ const Projects = () => {
       image: movieSite,
       link: 'https://benighter.github.io/Movie-site/',
       color: '#fb6340',
+      colorRgb: '251, 99, 64',
       categories: ['web', 'ui']
     },
     {
@@ -178,6 +213,7 @@ const Projects = () => {
       image: clock,
       link: 'https://futuristic-clock.vercel.app/',
       color: '#ffd600',
+      colorRgb: '255, 214, 0',
       categories: ['web', 'ui']
     }
   ]);
@@ -312,7 +348,16 @@ const Projects = () => {
 
   const filteredProjects = selectedCategory === 'all' 
     ? projectsList 
+    : selectedCategory === 'featured'
+    ? projectsList.filter(project => project.featured)
     : projectsList.filter(project => project.categories.includes(selectedCategory));
+
+  // Sort to prioritize featured projects
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return 0;
+  });
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -358,7 +403,7 @@ const Projects = () => {
           </div>
           
           <div className={`projects-grid ${isVisible ? 'animate' : ''} ${orbitActive ? 'orbit-active' : ''}`}>
-            {filteredProjects.map((project, index) => (
+            {sortedProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}
                 index={index}
@@ -370,7 +415,7 @@ const Projects = () => {
             ))}
           </div>
           
-          {filteredProjects.length === 0 && (
+          {sortedProjects.length === 0 && (
             <div className="no-projects">
               <FontAwesomeIcon icon={faMeteor} className="empty-icon" />
               <p>No projects found in this category.</p>
